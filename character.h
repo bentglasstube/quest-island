@@ -9,7 +9,7 @@ class Character {
   public:
 
     enum class Facing { DOWN, UP, RIGHT, LEFT };
-    enum class Role { WIZARD, KNIGHT, PEASANT };
+    enum class Role { WIZARD, KNIGHT, PEASANT, PRINCESS };
 
     Character(Role role);
 
