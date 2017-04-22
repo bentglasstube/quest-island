@@ -11,8 +11,8 @@ int main(int, char**) {
   config.graphics.title = "Ludum Dare 38";
   config.graphics.width = 256;
   config.graphics.height = 240;
-  config.graphics.width = 1920;
-  config.graphics.height = 1080;
+  /* config.graphics.width = 1920; */
+  /* config.graphics.height = 1080; */
   config.graphics.fullscreen = true;
 
   TitleScreen *s = new TitleScreen();

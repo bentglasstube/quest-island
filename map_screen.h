@@ -2,6 +2,7 @@
 
 #include "screen.h"
 
+#include "character.h"
 #include "map.h"
 
 class MapScreen : public Screen {
@@ -16,5 +17,6 @@ class MapScreen : public Screen {
   private:
 
     std::unique_ptr<Map> map_;
-    int ox, oy;
+    std::unique_ptr<Character> player_;
+    int px, py;
 };

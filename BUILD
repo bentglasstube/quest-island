@@ -1,5 +1,15 @@
 package(default_visibility = ["//visibility:public"])
 
+cc_library(
+    name = "character",
+    srcs = ["character.cc"],
+    hdrs = ["character.h"],
+    deps = [
+        "@libgam//:graphics",
+        "@libgam//:spritemap",
+    ],
+)
+
 cc_binary(
     name = "ld38",
     data = ["//content"],
@@ -36,6 +46,7 @@ cc_library(
     srcs = ["map_screen.cc"],
     hdrs = ["map_screen.h"],
     deps = [
+        ":character",
         ":map",
         "@libgam//:screen",
     ],

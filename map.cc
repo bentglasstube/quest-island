@@ -21,19 +21,22 @@ Map::Tile Map::get_tile(int x, int y) const {
   const float m = moisture(x, y);
 
   if (e > 0.030f) {
-    if (m > 0.0f) return Tile::TREES;
+    if (m > 0.1) return Tile::TREES;
     return Tile::MOUNTAINS;
   }
-
   if (e > 0.005f) {
-    if (m > 0.5f) return Tile::SWAMP;
-    if (m > 0.2f) return Tile::TREES;
-    if (m > -0.2f) return Tile::GRASS;
+    if (m > 0.3) return Tile::SWAMP;
+    if (m > 0.1) return Tile::TREES;
+    if (m > -0.2) return Tile::GRASS;
     return Tile::SAND;
   }
-
   if (e > 0.000f) return Tile::SAND;
   return Tile::WATER;
+}
+
+bool Map::walkable(int x, int y) const {
+  const Tile t = get_tile(x, y);
+  return !(t == Tile::WATER || t == Tile::MOUNTAINS);
 }
 
 float Map::elevation(int x, int y) const {
@@ -41,7 +44,7 @@ float Map::elevation(int x, int y) const {
   const float e = noise( 1 * x,  1 * y, seed_) / 2.0f
                 + noise( 2 * x,  2 * y, seed_) / 4.0f
                 + noise( 4 * x,  4 * y, seed_) / 8.0f;
-  return powf(e, 3.0f) + 0.03f - NOISE_ZOOM * 0.0005 * d;
+  return powf(e, 3.0f) + 0.03f - NOISE_ZOOM * 0.0003 * d;
 }
 
 float Map::moisture(int x, int y) const {

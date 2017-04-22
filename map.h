@@ -14,11 +14,12 @@ class Map {
 
     void draw(Graphics& graphics, int x, int y, int mx, int my, int mw, int mh) const;
     Tile get_tile(int x, int y) const;
+    bool walkable(int x, int y) const;
 
   private:
 
     const int TILE_SIZE = 8;
-    const float NOISE_ZOOM = 0.05f;
+    const float NOISE_ZOOM = 0.03f;
 
     std::unique_ptr<SpriteMap> sprites_;
     float seed_;
