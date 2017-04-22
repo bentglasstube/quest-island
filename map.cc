@@ -3,7 +3,7 @@
 #define STB_PERLIN_IMPLEMENTATION 1
 #include "stb_perlin.h"
 
-Map::Map(int seed) : seed_(seed / 12.324f + 38.238f) {
+Map::Map(int seed) : seed_(seed / 12.324f + 38.238f), water_level_(0.0f) {
   sprites_.reset(new SpriteMap("map.png", 8, TILE_SIZE, TILE_SIZE));
 }
 
@@ -20,23 +20,32 @@ Map::Tile Map::get_tile(int x, int y) const {
   const float e = elevation(x, y);
   const float m = moisture(x, y);
 
+  if (e < water_level_) return Tile::WATER;
+
   if (e > 0.030f) {
     if (m > 0.1) return Tile::TREES;
     return Tile::MOUNTAINS;
-  }
-  if (e > 0.005f) {
+  } else if (e > 0.005f) {
     if (m > 0.3) return Tile::SWAMP;
     if (m > 0.1) return Tile::TREES;
     if (m > -0.2) return Tile::GRASS;
     return Tile::SAND;
+  } else {
+    return Tile::SAND;
   }
-  if (e > 0.000f) return Tile::SAND;
-  return Tile::WATER;
 }
 
 bool Map::walkable(int x, int y) const {
   const Tile t = get_tile(x, y);
   return !(t == Tile::WATER || t == Tile::MOUNTAINS);
+}
+
+void Map::increase_water_level() {
+  water_level_ += 0.002;
+}
+
+void Map::decrease_water_level() {
+  water_level_ -= 0.002;
 }
 
 float Map::elevation(int x, int y) const {
@@ -55,8 +64,5 @@ float Map::moisture(int x, int y) const {
 }
 
 float Map::noise(int x, int y, int z) const {
-  // TODO move these
-  const float wrap = 16;
-
-  return stb_perlin_noise3(NOISE_ZOOM * x, NOISE_ZOOM * y, z, wrap, wrap);
+  return stb_perlin_noise3(NOISE_ZOOM * x, NOISE_ZOOM * y, z);
 }
