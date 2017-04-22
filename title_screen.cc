@@ -1,5 +1,7 @@
 #include "title_screen.h"
 
+#include "map_screen.h"
+
 void TitleScreen::init() {
   text_.reset(new Text("text.png"));
   backdrop_.reset(new Backdrop("title.png"));
@@ -15,5 +17,5 @@ void TitleScreen::draw(Graphics& graphics) const {
 }
 
 Screen* TitleScreen::next_screen() {
-  return NULL;
+  return new MapScreen();
 }

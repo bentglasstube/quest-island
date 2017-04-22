@@ -19,10 +19,34 @@ cc_binary(
 )
 
 cc_library(
+    name = "map",
+    srcs = ["map.cc"],
+    hdrs = [
+        "map.h",
+        "stb_perlin.h",
+    ],
+    deps = [
+        "@libgam//:graphics",
+        "@libgam//:spritemap",
+    ],
+)
+
+cc_library(
+    name = "map_screen",
+    srcs = ["map_screen.cc"],
+    hdrs = ["map_screen.h"],
+    deps = [
+        ":map",
+        "@libgam//:screen",
+    ],
+)
+
+cc_library(
     name = "title_screen",
     srcs = ["title_screen.cc"],
     hdrs = ["title_screen.h"],
     deps = [
+        ":map_screen",
         "@libgam//:backdrop",
         "@libgam//:screen",
         "@libgam//:text",
