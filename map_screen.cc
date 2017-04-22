@@ -62,10 +62,6 @@ bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
     }
   }
 
-  if (input.key_pressed(SDL_SCANCODE_SPACE)) {
-    init();
-  }
-
   return true;
 }
 
@@ -73,7 +69,10 @@ void MapScreen::draw(Graphics& graphics) const {
   const int nx = graphics.width() / 8;
   const int ny = graphics.height() / 8;
 
-  map_->draw(graphics, 0, 0, px_ - nx / 2, py_ - ny / 2, nx, ny);
+  // TODO determine visibility
+  const int visibility = 25 * map_->visibility();
+
+  map_->draw(graphics, 0, 0, px_ - nx / 2, py_ - ny / 2, nx, ny, visibility);
   player_->draw(graphics, graphics.width() / 2, graphics.height() / 2);
 }
 

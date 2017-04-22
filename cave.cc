@@ -38,6 +38,10 @@ void Cave::generate(unsigned int seed) {
   }
 }
 
+float Cave::visibility() const {
+  return 0.25f;
+}
+
 std::pair<int, int> Cave::spawn() const {
   return entrance_;
 }
@@ -97,6 +101,10 @@ void Cave::place_entrance() {
   } else {
     while (get_tile(cx, cy) == Tile::WALL) {
       ++cy;
+      if (cy > SIZE) {
+        place_entrance();
+        return;
+      }
     }
     add_overlay(cx, cy - 1, Tile::ENTRANCE);
     entrance_ = std::make_pair(cx, cy - 1);

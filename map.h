@@ -18,10 +18,11 @@ class Map {
       DIRT, ENTRANCE, WALL, CHEST,
     };
 
-    void draw(Graphics& graphics, int x, int y, int mx, int my, int mw, int mh) const;
+    void draw(Graphics& graphics, int x, int y, int mx, int my, int mw, int mh, int radius) const;
 
     virtual Tile get_tile(int x, int y) const = 0;
     bool walkable(int x, int y) const;
+    virtual float visibility() const;
 
     void generate();
     virtual void generate(unsigned int seed) = 0;
@@ -38,5 +39,4 @@ class Map {
     const int TILE_SIZE = 8;
 
     std::unique_ptr<SpriteMap> sprites_;
-
 };
