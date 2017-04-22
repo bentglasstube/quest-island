@@ -8,19 +8,50 @@ void MapScreen::init() {
   px = py = 0;
 }
 
-bool MapScreen::update(const Input& input, Audio&, unsigned int) {
-  if (input.key_held(SDL_SCANCODE_W)) {
-    player_->set_facing(Character::Facing::UP);
-    if (map_->walkable(px, py - 1)) --py;
-  } else if (input.key_held(SDL_SCANCODE_A)) {
-    player_->set_facing(Character::Facing::LEFT);
-    if (map_->walkable(px - 1, py)) --px;
-  } else if (input.key_held(SDL_SCANCODE_S)) {
-    player_->set_facing(Character::Facing::DOWN);
-    if (map_->walkable(px, py + 1)) ++py;
-  } else if (input.key_held(SDL_SCANCODE_D)) {
-    player_->set_facing(Character::Facing::RIGHT);
-    if (map_->walkable(px + 1, py)) ++px;
+bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
+  player_->update(elapsed);
+
+  if (!player_->waiting()) {
+    bool moved = false;
+
+    if (input.key_held(SDL_SCANCODE_W)) {
+      player_->set_facing(Character::Facing::UP);
+      if (map_->walkable(px, py - 1)) {
+        --py;
+        moved = true;
+      }
+    } else if (input.key_held(SDL_SCANCODE_A)) {
+      player_->set_facing(Character::Facing::LEFT);
+      if (map_->walkable(px - 1, py)) {
+        --px;
+        moved = true;
+      }
+    } else if (input.key_held(SDL_SCANCODE_S)) {
+      player_->set_facing(Character::Facing::DOWN);
+      if (map_->walkable(px, py + 1)) {
+        ++py;
+        moved = true;
+      }
+    } else if (input.key_held(SDL_SCANCODE_D)) {
+      player_->set_facing(Character::Facing::RIGHT);
+      if (map_->walkable(px + 1, py)) {
+        ++px;
+        moved = true;
+      }
+    }
+
+    if (moved) {
+      switch (map_->get_tile(px, py)) {
+        case Map::Tile::SWAMP:
+          player_->add_wait(300);
+          break;
+        case Map::Tile::TREES:
+          player_->add_wait(200);
+          break;
+        default:
+          player_->add_wait(100);
+      }
+    }
   }
 
   if (input.key_pressed(SDL_SCANCODE_SPACE)) {

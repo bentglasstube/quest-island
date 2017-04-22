@@ -13,13 +13,18 @@ class Character {
 
     Character(Role role);
 
+    void update(unsigned int elapsed);
     void draw(Graphics& graphics, int x, int y) const;
 
+    bool waiting() const;
+
     void set_facing(Facing facing);
+    void add_wait(int wait);
 
   private:
 
     Role role_;
     Facing facing_;
     std::unique_ptr<SpriteMap> sprites_;
+    int wait_;
 };

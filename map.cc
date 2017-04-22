@@ -44,7 +44,7 @@ float Map::elevation(int x, int y) const {
   const float e = noise( 1 * x,  1 * y, seed_) / 2.0f
                 + noise( 2 * x,  2 * y, seed_) / 4.0f
                 + noise( 4 * x,  4 * y, seed_) / 8.0f;
-  return powf(e, 3.0f) + 0.03f - NOISE_ZOOM * 0.0003 * d;
+  return powf(e, 3.0f) + 0.03f - NOISE_ZOOM * 0.0001 * d;
 }
 
 float Map::moisture(int x, int y) const {
