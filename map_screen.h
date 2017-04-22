@@ -18,6 +18,5 @@ class MapScreen : public Screen {
 
     std::unique_ptr<Map> map_;
     std::unique_ptr<Character> player_;
-    float px_, py_;
-    int timer_;
+    int px_, py_;
 };

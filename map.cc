@@ -15,7 +15,7 @@ void Map::draw(Graphics& graphics, int x, int y, int mx, int my, int mw, int mh)
 
 bool Map::walkable(int x, int y) const {
   const Tile t = get_tile(x, y);
-  return !(t == Tile::WATER || t == Tile::MOUNTAINS);
+  return !(t == Tile::WATER || t == Tile::MOUNTAINS || t == Tile::WALL);
 }
 
 void Map::add_overlay(int x, int y, Tile tile) {

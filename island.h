@@ -7,6 +7,7 @@ class Island : public Map {
 
     Tile get_tile(int x, int y) const override;
     void generate(unsigned int seed) override;
+    std::pair<int, int> spawn() const override;
 
   private:
 

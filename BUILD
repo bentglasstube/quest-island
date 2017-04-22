@@ -1,6 +1,13 @@
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
+    name = "cave",
+    srcs = ["cave.cc"],
+    hdrs = ["cave.h"],
+    deps = [":map"],
+)
+
+cc_library(
     name = "character",
     srcs = ["character.cc"],
     hdrs = ["character.h"],
@@ -53,6 +60,7 @@ cc_library(
     srcs = ["map_screen.cc"],
     hdrs = ["map_screen.h"],
     deps = [
+        ":cave",
         ":character",
         ":island",
         ":map",

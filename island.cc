@@ -28,8 +28,6 @@ Map::Tile Island::get_tile(int x, int y) const {
 }
 
 void Island::generate(unsigned int seed) {
-  printf("Generating island #%u\n", seed);
-
   rand_.seed(seed);
 
   std::uniform_real_distribution<float> u(-100, 100);
@@ -47,6 +45,10 @@ void Island::generate(unsigned int seed) {
   for (int i = 0; i < towns; ++i) {
     place_town();
   }
+}
+
+std::pair<int, int> Island::spawn() const {
+  return std::make_pair(0, 0);
 }
 
 float Island::elevation(int x, int y) const {

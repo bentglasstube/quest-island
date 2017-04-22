@@ -1,14 +1,17 @@
 #include "map_screen.h"
 
+#include "cave.h"
 #include "island.h"
 
 void MapScreen::init() {
-  map_.reset(new Island());
+  player_.reset(new Character(Character::Role::PEASANT));
+  map_.reset(new Cave());
+
   map_->generate();
 
-  player_.reset(new Character(Character::Role::PEASANT));
-  px_ = py_ = 0;
-  timer_ = 1000;
+  auto start = map_->spawn();
+  px_ = start.first;
+  py_ = start.second;
 }
 
 bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
@@ -62,12 +65,6 @@ bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
   if (input.key_pressed(SDL_SCANCODE_SPACE)) {
     init();
   }
-
-  /* timer_ -= elapsed; */
-  /* if (timer_ < 0) { */
-  /*   timer_ += 10000; */
-  /*   map_->increase_water_level(); */
-  /* } */
 
   return true;
 }

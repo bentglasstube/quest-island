@@ -13,7 +13,10 @@ class Map {
   public:
     Map();
 
-    enum class Tile { WATER, SAND, GRASS, TREES, SWAMP, MOUNTAINS, TOWN, CAVE };
+    enum class Tile {
+      WATER, SAND, GRASS, TREES, SWAMP, MOUNTAINS, TOWN, CAVE,
+      DIRT, ENTRANCE, WALL, CHEST,
+    };
 
     void draw(Graphics& graphics, int x, int y, int mx, int my, int mw, int mh) const;
 
@@ -22,6 +25,7 @@ class Map {
 
     void generate();
     virtual void generate(unsigned int seed) = 0;
+    virtual std::pair<int, int> spawn() const = 0;
 
   protected:
     std::default_random_engine rand_;
