@@ -1,0 +1,31 @@
+Fetch quests?
+
+Add wandering npcs who need help
+Helping them gives you an item which you can use to help other npcs
+I guess eventually you help everyone and get some way to leave the island?
+
+NPC ideas:
+  Wizard
+    - lost spellbook/wand/scroll
+    - hungry for fish?
+  Knight
+    - lost sword/shield
+    - hungry for fish?
+  Princess
+    -
+
+Enemies?
+  Bear wandering woods
+  Scorpion wandering deserts
+  Cave monsters
+
+Quest ideas:
+  Catch fish (requires fishing rod)
+  Find lost item
+  Kill monster (requires weapon)
+
+Polish ideas:
+  Clouds
+  Smooth walking
+  Music
+  Seed entry

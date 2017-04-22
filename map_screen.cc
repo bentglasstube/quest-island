@@ -1,10 +1,12 @@
 #include "map_screen.h"
 
-#include <cstdlib>
+#include "island.h"
 
 void MapScreen::init() {
-  map_.reset(new Map(std::rand()));
-  player_.reset(new Character(Character::Role::WIZARD));
+  map_.reset(new Island());
+  map_->generate();
+
+  player_.reset(new Character(Character::Role::PEASANT));
   px_ = py_ = 0;
   timer_ = 1000;
 }

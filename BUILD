@@ -10,6 +10,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "island",
+    srcs = ["island.cc"],
+    hdrs = [
+        "island.h",
+        "stb_perlin.h",
+    ],
+    deps = [":map"],
+)
+
 cc_binary(
     name = "ld38",
     data = ["//content"],
@@ -31,10 +41,7 @@ cc_binary(
 cc_library(
     name = "map",
     srcs = ["map.cc"],
-    hdrs = [
-        "map.h",
-        "stb_perlin.h",
-    ],
+    hdrs = ["map.h"],
     deps = [
         "@libgam//:graphics",
         "@libgam//:spritemap",
@@ -47,6 +54,7 @@ cc_library(
     hdrs = ["map_screen.h"],
     deps = [
         ":character",
+        ":island",
         ":map",
         "@libgam//:screen",
     ],
