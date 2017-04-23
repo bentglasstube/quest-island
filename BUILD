@@ -22,6 +22,7 @@ cc_library(
     srcs = ["dialog.cc"],
     hdrs = ["dialog.h"],
     deps = [
+        "@libgam//:audio",
         "@libgam//:graphics",
         "@libgam//:spritemap",
         "@libgam//:text",

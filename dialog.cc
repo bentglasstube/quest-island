@@ -1,18 +1,28 @@
 #include "dialog.h"
 
+#include <sstream>
+
 Dialog::Dialog() : page_(0), char_(0), timer_(0) {
   sprites_.reset(new SpriteMap("dialog.png", 3, 8, 8));
   text_.reset(new Text("text.png"));
+
+  std::random_device r;
+  engine_.seed(r());
 }
 
 void Dialog::add_page(const std::string& text) {
   pages_.push_back(text);
 }
 
-void Dialog::update(unsigned int elapsed) {
+void Dialog::update(Audio& audio, unsigned int elapsed) {
   if (!page_done()) {
     timer_ += elapsed;
     if (timer_ > RATE) {
+      std::ostringstream sample;
+      std::uniform_int_distribution<int> d(1, 4);
+
+      sample << "beep" << d(engine_) << ".wav";
+      audio.play_sample(sample.str());
       timer_ -= RATE;
       ++char_;
     }

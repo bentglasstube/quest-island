@@ -12,9 +12,9 @@ void MapScreen::init() {
   map_ = island_.get();
 }
 
-bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
+bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (dialog_) {
-    dialog_->update(elapsed);
+    dialog_->update(audio, elapsed);
     if (input.any_pressed()) dialog_->advance();
     if (dialog_->all_done()) dialog_.reset();
   } else {
