@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "graphics.h"
-#include "map.h"
 #include "spritemap.h"
 
 class Character {
@@ -12,22 +11,26 @@ class Character {
     enum class Facing { DOWN, UP, RIGHT, LEFT };
     enum class Role { WIZARD, KNIGHT, PEASANT, PRINCESS };
 
-    Character(Role role);
+    Character(Role role, float x, float y);
 
-    virtual void update(const Map& map, unsigned int elapsed);
+    virtual void update(unsigned int elapsed);
     void draw(Graphics& graphics, int x, int y) const;
 
     bool waiting() const;
 
-    void set_facing(Facing facing);
+    void move(Facing facing);
+    void stop();
     void add_wait(int wait);
 
-  protected:
-
-    Role role_;
-    Facing facing_;
+    std::pair<float, float> position() const;
+    void set_position(float x, float y);
 
   private:
+
     std::unique_ptr<SpriteMap> sprites_;
+    Role role_;
+    Facing facing_;
+    bool moving_;
+    float x_, y_;
     int wait_;
 };

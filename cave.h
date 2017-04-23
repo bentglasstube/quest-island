@@ -20,9 +20,6 @@ class Cave : public Map {
     void place_chest();
     void place_entrance();
 
-    std::pair<int, int> spawn() const override;
-
     Tile data_[SIZE][SIZE];
-    std::pair<int, int> entrance_;
 
 };

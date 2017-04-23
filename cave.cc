@@ -42,10 +42,6 @@ float Cave::visibility() const {
   return 0.25f;
 }
 
-std::pair<int, int> Cave::spawn() const {
-  return entrance_;
-}
-
 void Cave::iterate(std::function<bool(int, int)> selector) {
   Tile d[SIZE][SIZE];
   for (int y = 0; y < SIZE; ++y) {
@@ -97,7 +93,7 @@ void Cave::place_entrance() {
       --cy;
     }
     add_overlay(cx, cy + 1, Tile::ENTRANCE);
-    entrance_ = std::make_pair(cx, cy + 1);
+    player_->set_position(cx, cy + 1);
   } else {
     while (get_tile(cx, cy) == Tile::WALL) {
       ++cy;
@@ -107,6 +103,6 @@ void Cave::place_entrance() {
       }
     }
     add_overlay(cx, cy - 1, Tile::ENTRANCE);
-    entrance_ = std::make_pair(cx, cy - 1);
+    player_->set_position(cx, cy - 1);
   }
 }

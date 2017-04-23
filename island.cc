@@ -45,10 +45,8 @@ void Island::generate(unsigned int seed) {
   for (int i = 0; i < towns; ++i) {
     place_town();
   }
-}
 
-std::pair<int, int> Island::spawn() const {
-  return std::make_pair(0, 0);
+  player_.reset(new Character(Character::Role::PEASANT, 0, 0));
 }
 
 float Island::elevation(int x, int y) const {
