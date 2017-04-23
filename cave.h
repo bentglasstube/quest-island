@@ -9,6 +9,8 @@ class Cave : public Map {
 
     Tile get_tile(int x, int y) const override;
     void generate(unsigned int seed) override;
+    std::string music_type() const override;
+
     float visibility() const override;
     void open_chest(int x, int y) override;
 

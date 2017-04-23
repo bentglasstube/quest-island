@@ -19,3 +19,7 @@ void TitleScreen::draw(Graphics& graphics) const {
 Screen* TitleScreen::next_screen() {
   return new MapScreen();
 }
+
+std::string TitleScreen::get_music_track() const {
+  return "island.wav";
+}

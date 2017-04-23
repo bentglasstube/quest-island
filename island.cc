@@ -59,6 +59,10 @@ void Island::generate(unsigned int seed) {
   std::cerr << towns << " towns\n";
 }
 
+std::string Island::music_type() const {
+  return "island.wav";
+}
+
 Map* Island::get_cave(int x, int y) {
   auto cave = caves_.find(std::make_pair(x, y));
   if (cave == caves_.end()) {

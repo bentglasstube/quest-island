@@ -8,6 +8,7 @@ class Island : public Map {
 
     Tile get_tile(int x, int y) const override;
     void generate(unsigned int seed) override;
+    std::string music_type() const override;
 
     Map* get_cave(int x, int y) override;
 

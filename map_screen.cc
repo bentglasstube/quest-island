@@ -88,6 +88,8 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
       next_map_ = NULL;
       state_ = DisplayState::FADEIN;
       fade_time_ = FADE_DURATION;
+
+      audio.stop_music();
     }
 
   } else if (state_ == DisplayState::FADEIN) {
@@ -142,6 +144,10 @@ void MapScreen::draw(Graphics& graphics) const {
 
 Screen* MapScreen::next_screen() {
   return NULL;
+}
+
+std::string MapScreen::get_music_track() const {
+  if (map_) return map_->music_type();
 }
 
 void MapScreen::switch_maps(Map* next_map) {

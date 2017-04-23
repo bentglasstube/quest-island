@@ -43,6 +43,8 @@ class Map {
     virtual void open_chest(int x, int y);
     virtual Map* get_cave(int x, int y);
 
+    virtual std::string music_type() const = 0;
+
   protected:
     std::default_random_engine rand_;
     std::map<std::pair<int, int>, Tile> overlays_;

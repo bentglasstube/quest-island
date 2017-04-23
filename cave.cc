@@ -44,6 +44,10 @@ void Cave::generate(unsigned int seed) {
   std::cerr << chests << " chests\n";
 }
 
+std::string Cave::music_type() const {
+  return "cave.wav";
+}
+
 float Cave::visibility() const {
   return 0.20f;
 }
