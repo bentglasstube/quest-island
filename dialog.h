@@ -26,7 +26,7 @@ class Dialog {
 
   private:
 
-    static const int RATE = 100;
+    static const int RATE = 50;
 
     std::unique_ptr<SpriteMap> sprites_;
     std::unique_ptr<Text> text_;

@@ -94,8 +94,24 @@ cc_library(
         ":character",
         ":dialog",
         ":island",
+        ":item",
         ":map",
+        ":pause_menu",
         "@libgam//:screen",
+    ],
+)
+
+cc_library(
+    name = "pause_menu",
+    srcs = ["pause_menu.cc"],
+    hdrs = ["pause_menu.h"],
+    deps = [
+        ":item",
+        "@libgam//:audio",
+        "@libgam//:graphics",
+        "@libgam//:input",
+        "@libgam//:spritemap",
+        "@libgam//:text",
     ],
 )
 

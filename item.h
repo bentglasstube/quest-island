@@ -10,7 +10,7 @@ class Item {
   public:
 
     enum class Type {
-      AXE, FISHROD, FISH, LOG,
+      AXE, ROD, FISH, LOG,
       TORCH, KEY, BOOK, SKULL,
       CROWN, FRESH, CHICKEN, POTION,
       RING, BAG, SWORD, SHIELD,
@@ -20,6 +20,7 @@ class Item {
 
     void draw(Graphics& graphics, int x, int y) const;
 
+    Type type() const;
     std::string name() const;
     std::string description() const;
 

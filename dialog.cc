@@ -30,6 +30,7 @@ void Dialog::update(Audio& audio, unsigned int elapsed) {
 }
 
 void Dialog::draw(Graphics& graphics, int x, int y, int w, int h) const {
+  // TODO refactor to box-drawing
   sprites_->draw(graphics, 0, x, y);
   for (int iy = y + 8; iy < y + h - 8; iy += 8) {
     sprites_->draw(graphics, 3, x, iy);

@@ -20,7 +20,7 @@ class Map {
 
     enum class Tile {
       WATER, SAND, GRASS, TREES, SWAMP, MOUNTAINS, TOWN, CAVE,
-      DIRT, ENTRANCE, WALL, CHEST, EMPTY,
+      DIRT, ENTRANCE, WALL, CHEST, EMPTY, STUMP,
     };
 
     std::unique_ptr<Character> player;
@@ -46,12 +46,13 @@ class Map {
 
     virtual std::string music_type() const = 0;
 
+    void add_overlay(int x, int y, Tile tile);
+
   protected:
     std::default_random_engine rand_;
     std::map<std::pair<int, int>, Tile> overlays_;
     std::vector<Character> npcs_;
 
-    void add_overlay(int x, int y, Tile tile);
     void add_npc(Character::Role role, int x, int y);
 
   private:
