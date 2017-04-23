@@ -22,11 +22,12 @@ class Map {
       DIRT, ENTRANCE, WALL, CHEST,
     };
 
+    std::unique_ptr<Character> player;
+
     void update(unsigned int elapsed);
     void draw(Graphics& graphics, int x, int y, int w, int h, int radius) const;
 
     void move_player(Character::Facing direction);
-    void stop_player();
 
     virtual Tile get_tile(int x, int y) const = 0;
     bool walkable(int x, int y) const;
@@ -40,7 +41,6 @@ class Map {
   protected:
     std::default_random_engine rand_;
     std::map<std::pair<int, int>, Tile> overlays_;
-    std::unique_ptr<Character> player_;
     std::vector<Character> npcs_;
 
     void add_overlay(int x, int y, Tile tile);

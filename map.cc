@@ -6,7 +6,7 @@ Map::Map() {
 }
 
 void Map::update(unsigned int elapsed) {
-  player_->update(elapsed);
+  player->update(elapsed);
 
   std::uniform_int_distribution<int> r(0, 3);
 
@@ -32,7 +32,7 @@ void Map::draw(Graphics& graphics, int x, int y, int w, int h, int radius) const
   int tw = (w / TILE_SIZE) + 1;
   int th = (h / TILE_SIZE) + 1;
 
-  auto pos = player_->position();
+  auto pos = player->position();
   const int sx = pos.first - tw / 2;
   const int sy = pos.second - th / 2;
 
@@ -41,14 +41,14 @@ void Map::draw(Graphics& graphics, int x, int y, int w, int h, int radius) const
     for (int ix = 0; ix < tw; ++ix) {
       const int dx = ix + sx - pos.first;
       const int d = dx * dx + dy * dy;
-      if (d <= radius * radius) {
+      if (d < radius * radius) {
         const int t = static_cast<int>(get_tile(ix + sx, iy + sy));
         sprites_->draw(graphics, t, x + TILE_SIZE * ix, y + TILE_SIZE * iy);
       }
     }
   }
 
-  player_->draw(graphics, x + w / 2, y + h / 2);
+  player->draw(graphics, x + w / 2, y + h / 2);
 
   for (auto i = npcs_.begin(); i < npcs_.end(); ++i) {
     auto pos = (*i).position();
@@ -62,20 +62,16 @@ void Map::draw(Graphics& graphics, int x, int y, int w, int h, int radius) const
 }
 
 void Map::move_player(Character::Facing direction) {
-  auto pos = player_->position();
+  auto pos = player->position();
 
-  if (!player_->waiting()) {
-    player_->move(direction);
+  if (!player->waiting()) {
+    player->move(direction);
     if (walkable(pos.first, pos.second, direction)) {
-      player_->add_wait(tile_delay(pos.first, pos.second));
+      player->add_wait(tile_delay(pos.first, pos.second));
     } else {
-      player_->stop();
+      player->stop();
     }
   }
-}
-
-void Map::stop_player() {
-  player_->stop();
 }
 
 bool Map::walkable(int x, int y) const {
@@ -88,7 +84,7 @@ bool Map::walkable(int x, int y) const {
       return false;
 
     default:
-      auto pp = player_->position();
+      auto pp = player->position();
       if (x == pp.first && y == pp.second) return false;
 
       for (auto i = npcs_.begin(); i < npcs_.end(); ++i) {
@@ -115,8 +111,8 @@ int Map::tile_delay(int x, int y) const {
   switch (t) {
     case Tile::SWAMP: return 300;
     case Tile::TREES: return 200;
+    default:          return 100;
   }
-  return 100;
 }
 
 float Map::visibility() const {

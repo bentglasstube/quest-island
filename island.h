@@ -1,6 +1,7 @@
 #pragma once
 
 #include "map.h"
+#include "cave.h"
 
 class Island : public Map {
   public:
@@ -13,6 +14,7 @@ class Island : public Map {
     const float NOISE_ZOOM = 0.03f;
 
     float elevation_z_, moisture_z_;
+    std::map<std::pair<int, int>, Cave> caves_;
 
     float elevation(int x, int y) const;
     float moisture(int x, int y) const;

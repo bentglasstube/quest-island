@@ -1,10 +1,11 @@
 #include "map_screen.h"
 
-#include "cave.h"
+#include <iostream>
+
 #include "island.h"
 
 void MapScreen::init() {
-  map_.reset(new Cave());
+  map_.reset(new Island());
   map_->generate();
 }
 
@@ -20,10 +21,15 @@ bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
   } else if (input.key_held(SDL_SCANCODE_D)) {
     map_->move_player(Character::Facing::RIGHT);
   } else {
-    map_->stop_player();
+    map_->player->stop();
   }
 
-  // TODO handle more inputs
+  // TODO check for cave
+  auto pos = map_->player->position();
+  const Map::Tile t = map_->get_tile(pos.first, pos.second);
+  if (t == Map::Tile::CAVE) {
+    std::cerr << "Cave entrance!\n";
+  }
 
   return true;
 }

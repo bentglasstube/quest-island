@@ -24,7 +24,10 @@ cc_library(
         "island.h",
         "stb_perlin.h",
     ],
-    deps = [":map"],
+    deps = [
+        ":cave",
+        ":map"
+    ],
 )
 
 cc_binary(
@@ -62,7 +65,6 @@ cc_library(
     srcs = ["map_screen.cc"],
     hdrs = ["map_screen.h"],
     deps = [
-        ":cave",
         ":character",
         ":island",
         ":map",

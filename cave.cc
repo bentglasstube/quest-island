@@ -1,5 +1,7 @@
 #include "cave.h"
 
+#include <iostream>
+
 Map::Tile Cave::get_tile(int x, int y) const {
   auto overlay = overlays_.find(std::make_pair(x, y));
   if (overlay != overlays_.end()) {
@@ -13,7 +15,7 @@ Map::Tile Cave::get_tile(int x, int y) const {
 
 void Cave::generate(unsigned int seed) {
   rand_.seed(seed);
-  player_.reset(new Character(Character::Role::PEASANT, 0, 0));
+  player.reset(new Character(Character::Role::PEASANT, 0, 0));
 
   std::uniform_real_distribution<float> u(0.0, 1.0f);
 
@@ -37,10 +39,13 @@ void Cave::generate(unsigned int seed) {
   for (int i = 0 ; i < chests; ++i) {
     place_chest();
   }
+
+  std::cerr << "Generated cave #" << seed << "\n";
+  std::cerr << chests << " chests\n";
 }
 
 float Cave::visibility() const {
-  return 0.25f;
+  return 0.20f;
 }
 
 void Cave::iterate(std::function<bool(int, int)> selector) {
@@ -94,7 +99,7 @@ void Cave::place_entrance() {
       --cy;
     }
     add_overlay(cx, cy + 1, Tile::ENTRANCE);
-    player_->set_position(cx, cy + 1);
+    player->set_position(cx, cy + 2);
   } else {
     while (get_tile(cx, cy) == Tile::WALL) {
       ++cy;
@@ -104,6 +109,6 @@ void Cave::place_entrance() {
       }
     }
     add_overlay(cx, cy - 1, Tile::ENTRANCE);
-    player_->set_position(cx, cy - 1);
+    player->set_position(cx, cy);
   }
 }

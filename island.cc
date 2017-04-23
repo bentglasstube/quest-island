@@ -1,5 +1,7 @@
 #include "island.h"
 
+#include <iostream>
+
 #define STB_PERLIN_IMPLEMENTATION 1
 #include "stb_perlin.h"
 
@@ -30,7 +32,7 @@ Map::Tile Island::get_tile(int x, int y) const {
 void Island::generate(unsigned int seed) {
   rand_.seed(seed);
 
-  player_.reset(new Character(Character::Role::PEASANT, 0, 0));
+  player.reset(new Character(Character::Role::PEASANT, 0, 0));
 
   std::uniform_real_distribution<float> u(-100, 100);
   elevation_z_ = u(rand_);
@@ -51,6 +53,10 @@ void Island::generate(unsigned int seed) {
   place_npc(Character::Role::WIZARD);
   place_npc(Character::Role::KNIGHT);
   place_npc(Character::Role::PRINCESS);
+
+  std::cerr << "Generated island #" << seed << "\n";
+  std::cerr << caves << " caves\n";
+  std::cerr << towns << " towns\n";
 }
 
 float Island::elevation(int x, int y) const {
@@ -83,7 +89,11 @@ void Island::place_cave() {
       while (get_tile(cx, cy) == Tile::MOUNTAINS) {
         ++cy;
       }
+
       add_overlay(cx, cy - 1, Tile::CAVE);
+      auto r = caves_.emplace(std::make_pair(cx, cy - 1), Cave{});
+      if (r.second) r.first->second.generate(rand_());
+
       return;
     }
   }
