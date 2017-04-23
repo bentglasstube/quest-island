@@ -30,6 +30,8 @@ Map::Tile Island::get_tile(int x, int y) const {
 void Island::generate(unsigned int seed) {
   rand_.seed(seed);
 
+  player_.reset(new Character(Character::Role::PEASANT, 0, 0));
+
   std::uniform_real_distribution<float> u(-100, 100);
   elevation_z_ = u(rand_);
   moisture_z_ = u(rand_);
@@ -46,7 +48,9 @@ void Island::generate(unsigned int seed) {
     place_town();
   }
 
-  player_.reset(new Character(Character::Role::PEASANT, 0, 0));
+  place_npc(Character::Role::WIZARD);
+  place_npc(Character::Role::KNIGHT);
+  place_npc(Character::Role::PRINCESS);
 }
 
 float Island::elevation(int x, int y) const {
@@ -71,7 +75,7 @@ float Island::noise(int x, int y, int z) const {
 void Island::place_cave() {
   std::normal_distribution<float> normal(0, 100);
 
-  for (int i = 0; i < 100; ++i) {
+  while (true) {
     int cx = normal(rand_);
     int cy = normal(rand_);
 
@@ -88,12 +92,26 @@ void Island::place_cave() {
 void Island::place_town() {
   std::normal_distribution<float> normal(0, 100);
 
-  for (int i = 0; i < 100; ++i) {
+  while (true) {
     int cx = normal(rand_);
     int cy = normal(rand_);
 
     if (get_tile(cx, cy) == Tile::GRASS) {
       add_overlay(cx, cy, Tile::TOWN);
+      return;
+    }
+  }
+}
+
+void Island::place_npc(Character::Role role) {
+  std::normal_distribution<float> normal(0, 100);
+
+  while (true) {
+    int cx = normal(rand_);
+    int cy = normal(rand_);
+
+    if (walkable(cx, cy)) {
+      add_npc(role, cx, cy);
       return;
     }
   }

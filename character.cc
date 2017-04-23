@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character::Character(Role role, float x, float y) : role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0) {
+Character::Character(Role role, int x, int y) : role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0) {
   sprites_.reset(new SpriteMap("character.png", 4, 8, 8));
 }
 
@@ -16,8 +16,6 @@ void Character::update(unsigned int elapsed) {
         case Facing::LEFT:  --x_; break;
         case Facing::RIGHT: ++x_; break;
       }
-
-      fprintf(stderr, "Player moving %u, now at %d, %d\n", static_cast<int>(facing_), x_, y_);
     }
   }
 }
@@ -29,6 +27,14 @@ void Character::draw(Graphics& graphics, int x, int y) const {
 
 bool Character::waiting() const {
   return wait_ > 0;
+}
+
+bool Character::moving()  const {
+  return moving_;
+}
+
+Character::Facing Character::facing() const {
+  return facing_;
 }
 
 void Character::move(Facing facing) {
@@ -44,11 +50,11 @@ void Character::add_wait(int wait) {
   wait_ += wait;
 }
 
-std::pair<float, float> Character::position() const {
+std::pair<int, int> Character::position() const {
   return std::make_pair(x_, y_);
 }
 
-void Character::set_position(float x, float y) {
+void Character::set_position(int x, int y) {
   x_ = x;
   y_ = y;
 }

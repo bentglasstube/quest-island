@@ -4,7 +4,7 @@
 #include "island.h"
 
 void MapScreen::init() {
-  map_.reset(new Island());
+  map_.reset(new Cave());
   map_->generate();
 }
 

@@ -30,6 +30,8 @@ class Map {
 
     virtual Tile get_tile(int x, int y) const = 0;
     bool walkable(int x, int y) const;
+    bool walkable(int x, int y, Character::Facing direction) const;
+    int tile_delay(int x, int y) const;
     virtual float visibility() const;
 
     void generate();
@@ -42,6 +44,7 @@ class Map {
     std::vector<Character> npcs_;
 
     void add_overlay(int x, int y, Tile tile);
+    void add_npc(Character::Role role, int x, int y);
 
   private:
 

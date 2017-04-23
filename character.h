@@ -11,19 +11,21 @@ class Character {
     enum class Facing { DOWN, UP, RIGHT, LEFT };
     enum class Role { WIZARD, KNIGHT, PEASANT, PRINCESS };
 
-    Character(Role role, float x, float y);
+    Character(Role role, int x, int y);
 
     virtual void update(unsigned int elapsed);
     void draw(Graphics& graphics, int x, int y) const;
 
     bool waiting() const;
+    bool moving() const;
+    Facing facing() const;
 
     void move(Facing facing);
     void stop();
     void add_wait(int wait);
 
-    std::pair<float, float> position() const;
-    void set_position(float x, float y);
+    std::pair<int, int> position() const;
+    void set_position(int x, int y);
 
   private:
 
@@ -31,6 +33,5 @@ class Character {
     Role role_;
     Facing facing_;
     bool moving_;
-    float x_, y_;
-    int wait_;
+    int x_, y_, wait_;
 };

@@ -20,5 +20,6 @@ class Island : public Map {
 
     void place_cave();
     void place_town();
+    void place_npc(Character::Role role);
 
 };

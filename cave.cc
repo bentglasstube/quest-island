@@ -13,6 +13,7 @@ Map::Tile Cave::get_tile(int x, int y) const {
 
 void Cave::generate(unsigned int seed) {
   rand_.seed(seed);
+  player_.reset(new Character(Character::Role::PEASANT, 0, 0));
 
   std::uniform_real_distribution<float> u(0.0, 1.0f);
 
