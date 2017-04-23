@@ -81,6 +81,7 @@ bool Map::walkable(int x, int y) const {
     case Tile::WALL:
     case Tile::TOWN:
     case Tile::CHEST:
+    case Tile::EMPTY:
       return false;
 
     default:

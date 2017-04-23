@@ -44,7 +44,7 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
       const Character* npc = map_->get_npc(p.first, p.second);
       if (npc) {
         std::ostringstream text;
-        text  << "Hello, I am the " << npc->name();
+        text  << "Hello, I am the " << npc->name() << ".";
         dialog_.reset(new Dialog());
         dialog_->add_page(text.str());
 
@@ -52,8 +52,10 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
         const Map::Tile t = map_->get_tile(p.first, p.second);
         switch (t) {
           case Map::Tile::CHEST:
+            map_->open_chest(p.first, p.second);
+
             dialog_.reset(new Dialog());
-            dialog_->add_page("You don't have any way to open that.");
+            dialog_->add_page("You found an inflatable\ndigshake inside!");
             break;
 
           case Map::Tile::EMPTY:
