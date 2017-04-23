@@ -134,3 +134,9 @@ const Character* Map::get_npc(int x, int y) const {
   }
   return NULL;
 }
+
+void Map::open_chest(int x, int y) {}
+
+Map* Map::get_cave(int x, int y) {
+  return NULL;
+}

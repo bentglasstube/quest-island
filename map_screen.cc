@@ -53,6 +53,11 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
         switch (t) {
           case Map::Tile::CHEST:
             dialog_.reset(new Dialog());
+            dialog_->add_page("You don't have any way to open that.");
+            break;
+
+          case Map::Tile::EMPTY:
+            dialog_.reset(new Dialog());
             dialog_->add_page("It's empty!");
             break;
 
@@ -72,8 +77,7 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
     auto pos = map_->player->position();
     const Map::Tile t = map_->get_tile(pos.first, pos.second);
     if (t == Map::Tile::CAVE) {
-      Island* i = dynamic_cast<Island*>(island_.get());
-      map_ = i->get_cave(pos.first, pos.second);
+      map_ = map_->get_cave(pos.first, pos.second);
 
       if (map_) {
         bump_player();

@@ -9,7 +9,7 @@ class Island : public Map {
     Tile get_tile(int x, int y) const override;
     void generate(unsigned int seed) override;
 
-    Cave* get_cave(int x, int y);
+    Map* get_cave(int x, int y) override;
 
   private:
 

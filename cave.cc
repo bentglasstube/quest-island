@@ -48,6 +48,12 @@ float Cave::visibility() const {
   return 0.20f;
 }
 
+void Cave::open_chest(int x, int y) {
+  if (get_tile(x, y) == Tile::CHEST) {
+    data_[y][x] = Tile::EMPTY;
+  }
+}
+
 void Cave::iterate(std::function<bool(int, int)> selector) {
   Tile d[SIZE][SIZE];
   for (int y = 0; y < SIZE; ++y) {
@@ -82,7 +88,7 @@ void Cave::place_chest() {
     int cy = normal(rand_);
 
     if (get_tile(cx, cy) == Tile::DIRT) {
-      add_overlay(cx, cy, Tile::CHEST);
+      data_[cy][cx] = Tile::CHEST;
       return;
     }
   }

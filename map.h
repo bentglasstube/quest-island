@@ -19,7 +19,7 @@ class Map {
 
     enum class Tile {
       WATER, SAND, GRASS, TREES, SWAMP, MOUNTAINS, TOWN, CAVE,
-      DIRT, ENTRANCE, WALL, CHEST,
+      DIRT, ENTRANCE, WALL, CHEST, EMPTY,
     };
 
     std::unique_ptr<Character> player;
@@ -39,6 +39,9 @@ class Map {
     virtual void generate(unsigned int seed) = 0;
 
     const Character* get_npc(int x, int y) const;
+
+    virtual void open_chest(int x, int y);
+    virtual Map* get_cave(int x, int y);
 
   protected:
     std::default_random_engine rand_;
