@@ -60,7 +60,7 @@ std::string Item::name() const {
   }
 }
 
-std::string Item::descriptionn() const {
+std::string Item::description() const {
   switch (type_) {
     case Type::AXE:
       return "A shoddy axe, but it is probably\ngood for chopping wood.";
@@ -109,5 +109,5 @@ std::string Item::descriptionn() const {
 
     case Type::SHIELD:
       return "A garden variety shield.  The\ncross painted on it somehow slipped\nby the translators.";
-  }}
+  }
 }

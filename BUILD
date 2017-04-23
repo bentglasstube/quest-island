@@ -4,7 +4,10 @@ cc_library(
     name = "cave",
     srcs = ["cave.cc"],
     hdrs = ["cave.h"],
-    deps = [":map"],
+    deps = [
+        ":item",
+        ":map"
+    ],
 )
 
 cc_library(
@@ -76,6 +79,7 @@ cc_library(
     hdrs = ["map.h"],
     deps = [
         ":character",
+        ":item",
         "@libgam//:graphics",
         "@libgam//:spritemap",
         "@libgam//:text",

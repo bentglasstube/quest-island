@@ -2,6 +2,7 @@
 
 #include <functional>
 
+#include "item.h"
 #include "map.h"
 
 class Cave : public Map {
@@ -12,7 +13,7 @@ class Cave : public Map {
     std::string music_type() const override;
 
     float visibility() const override;
-    void open_chest(int x, int y) override;
+    Item* open_chest(int x, int y) override;
 
   private:
 
@@ -24,5 +25,7 @@ class Cave : public Map {
     void place_entrance();
 
     Tile data_[SIZE][SIZE];
+
+    std::map<std::pair<int, int>, Item> chests_;
 
 };

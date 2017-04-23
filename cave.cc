@@ -52,10 +52,15 @@ float Cave::visibility() const {
   return 0.20f;
 }
 
-void Cave::open_chest(int x, int y) {
+Item* Cave::open_chest(int x, int y) {
   if (get_tile(x, y) == Tile::CHEST) {
     data_[y][x] = Tile::EMPTY;
+
+    auto i = chests_.find(std::make_pair(x, y));
+    return &((*i).second);
   }
+
+  return NULL;
 }
 
 void Cave::iterate(std::function<bool(int, int)> selector) {
@@ -86,6 +91,7 @@ int Cave::walls_within(int x, int y, int r) const {
 
 void Cave::place_chest() {
   std::normal_distribution<float> normal(0, 100);
+  std::uniform_int_distribution<int> uni(0, 15);
 
   for (int i = 0; i < 100; ++i) {
     int cx = normal(rand_);
@@ -93,6 +99,12 @@ void Cave::place_chest() {
 
     if (get_tile(cx, cy) == Tile::DIRT) {
       data_[cy][cx] = Tile::CHEST;
+
+      Item::Type item = static_cast<Item::Type>(uni(rand_));
+      auto r = chests_.emplace(std::make_pair(cx, cy), item);
+
+      std::cerr << "Placed " << r.first->second.name() << " in chest at " << cx << ", " << cy << "\n";
+
       return;
     }
   }

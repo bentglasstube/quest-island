@@ -53,16 +53,15 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
       } else {
         const Map::Tile t = map_->get_tile(p.first, p.second);
         switch (t) {
-          case Map::Tile::CHEST:
-            map_->open_chest(p.first, p.second);
 
-            dialog_.reset(new Dialog());
-            dialog_->add_page("You found an inflatable\ndigshake inside!");
+          case Map::Tile::CHEST:
+
+            handle_chest(audio, p.first, p.second);
             break;
 
           case Map::Tile::EMPTY:
             dialog_.reset(new Dialog());
-            dialog_->add_page("It's empty!");
+            dialog_->add_page("It's empty.");
             break;
 
           case Map::Tile::TOWN:
@@ -112,11 +111,11 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
 }
 
 void MapScreen::draw(Graphics& graphics) const {
-  const int visibility = 25 * map_->visibility();
+  const int visibility = 50 * map_->visibility();
   map_->draw(graphics, 0, 0, graphics.width(), graphics.height(), visibility);
 
   if (dialog_) {
-    dialog_->draw(graphics, 8, 8, graphics.width() - 16, 64);
+    dialog_->draw(graphics, 0, 8, graphics.width(), 64);
   }
 
   int width = 0;
@@ -160,4 +159,20 @@ void MapScreen::switch_maps(Map* next_map) {
     state_ = DisplayState::FADEOUT;
     fade_time_ = FADE_DURATION;
   }
+}
+
+void MapScreen::handle_chest(Audio& audio, int x, int y) {
+  Item* item = map_->open_chest(x, y);
+  std::ostringstream msg;
+
+  if (item) {
+    audio.play_sample("fanfare.wav");
+    msg << "You found the " << item->name() << "!";
+    // TODO add item to inventory
+  } else {
+    msg << "Huh, there was nothing inside.";
+  }
+
+  dialog_.reset(new Dialog());
+  dialog_->add_page(msg.str());
 }

@@ -37,4 +37,5 @@ class MapScreen : public Screen {
     std::unique_ptr<Dialog> dialog_;
 
     void switch_maps(Map* next_map);
+    void handle_chest(Audio& audio, int x, int y);
 };

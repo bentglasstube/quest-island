@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "graphics.h"
+#include "item.h"
 #include "spritemap.h"
 #include "text.h"
 
@@ -40,7 +41,7 @@ class Map {
 
     const Character* get_npc(int x, int y) const;
 
-    virtual void open_chest(int x, int y);
+    virtual Item* open_chest(int x, int y);
     virtual Map* get_cave(int x, int y);
 
     virtual std::string music_type() const = 0;
