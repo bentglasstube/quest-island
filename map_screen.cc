@@ -7,7 +7,7 @@
 
 void MapScreen::init() {
   island_.reset(new Island());
-  island_->generate(23982374);
+  island_->generate();
 
   map_ = island_.get();
   state_ = DisplayState::FADEIN;
