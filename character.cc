@@ -58,3 +58,12 @@ void Character::set_position(int x, int y) {
   x_ = x;
   y_ = y;
 }
+
+std::string Character::name() const {
+  switch (role_) {
+    case Role::WIZARD:   return "wizard";
+    case Role::KNIGHT:   return "knight";
+    case Role::PEASANT:  return "peasant";
+    case Role::PRINCESS: return "princess";
+  }
+}

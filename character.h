@@ -27,6 +27,8 @@ class Character {
     std::pair<int, int> position() const;
     void set_position(int x, int y);
 
+    std::string name() const;
+
   private:
 
     std::unique_ptr<SpriteMap> sprites_;

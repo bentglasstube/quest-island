@@ -6,6 +6,7 @@
 
 #include "cave.h"
 #include "character.h"
+#include "dialog.h"
 #include "map.h"
 
 class MapScreen : public Screen {
@@ -23,6 +24,7 @@ class MapScreen : public Screen {
 
     std::unique_ptr<Map> island_;
     std::unique_ptr<Character> player_;
+    std::unique_ptr<Dialog> dialog_;
 
     void bump_player();
 };

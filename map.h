@@ -38,6 +38,8 @@ class Map {
     void generate();
     virtual void generate(unsigned int seed) = 0;
 
+    const Character* get_npc(int x, int y) const;
+
   protected:
     std::default_random_engine rand_;
     std::map<std::pair<int, int>, Tile> overlays_;

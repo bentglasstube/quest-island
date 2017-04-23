@@ -84,14 +84,9 @@ bool Map::walkable(int x, int y) const {
       return false;
 
     default:
-      auto pp = player->position();
-      if (x == pp.first && y == pp.second) return false;
-
-      for (auto i = npcs_.begin(); i < npcs_.end(); ++i) {
-        auto np = (*i).position();
-        if (x == np.first && y == np.second) return false;
-      }
-
+      auto p = player->position();
+      if (x == p.first && y == p.second) return false;
+      if (get_npc(x, y) != NULL) return false;
       return true;
   }
 }
@@ -130,4 +125,12 @@ void Map::add_npc(Character::Role role, int x, int y) {
 void Map::generate() {
   std::random_device r;
   generate(r());
+}
+
+const Character* Map::get_npc(int x, int y) const {
+  for (auto i = npcs_.begin(); i < npcs_.end(); ++i) {
+    auto p = (*i).position();
+    if (x == p.first && y == p.second) return &*i;
+  }
+  return NULL;
 }

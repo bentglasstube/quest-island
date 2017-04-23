@@ -18,6 +18,17 @@ cc_library(
 )
 
 cc_library(
+    name = "dialog",
+    srcs = ["dialog.cc"],
+    hdrs = ["dialog.h"],
+    deps = [
+        "@libgam//:graphics",
+        "@libgam//:spritemap",
+        "@libgam//:text",
+    ],
+)
+
+cc_library(
     name = "island",
     srcs = ["island.cc"],
     hdrs = [
@@ -66,6 +77,7 @@ cc_library(
     hdrs = ["map_screen.h"],
     deps = [
         ":character",
+        ":dialog",
         ":island",
         ":map",
         "@libgam//:screen",
