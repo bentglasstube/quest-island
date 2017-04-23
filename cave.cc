@@ -34,7 +34,7 @@ void Cave::generate(unsigned int seed) {
 
   place_entrance();
 
-  std::normal_distribution<float> n(2, 1);
+  std::uniform_int_distribution<int> n(1, 3);
   const int chests = n(rand_);
   for (int i = 0 ; i < chests; ++i) {
     place_chest();
