@@ -4,7 +4,7 @@ Character::Character(Role role) : role_(role), facing_(Facing::DOWN), wait_(0) {
   sprites_.reset(new SpriteMap("character.png", 4, 8, 8));
 }
 
-void Character::update(unsigned int elapsed) {
+void Character::update(const Map&, unsigned int elapsed) {
   wait_ -= elapsed;
   if (wait_ < 0) wait_ = 0;
 }

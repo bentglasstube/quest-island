@@ -5,8 +5,9 @@
 
 void MapScreen::init() {
   player_.reset(new Character(Character::Role::PEASANT));
-  map_.reset(new Cave());
+  map_.reset(new Island());
 
+  // TODO move to generation algorithm
   map_->generate();
 
   auto start = map_->spawn();
@@ -15,7 +16,7 @@ void MapScreen::init() {
 }
 
 bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
-  player_->update(elapsed);
+  player_->update(*map_, elapsed);
 
   if (!player_->waiting()) {
     bool moved = false;

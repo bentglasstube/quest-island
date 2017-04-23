@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "graphics.h"
+#include "map.h"
 #include "spritemap.h"
 
 class Character {
@@ -13,7 +14,7 @@ class Character {
 
     Character(Role role);
 
-    void update(unsigned int elapsed);
+    virtual void update(const Map& map, unsigned int elapsed);
     void draw(Graphics& graphics, int x, int y) const;
 
     bool waiting() const;
@@ -21,10 +22,12 @@ class Character {
     void set_facing(Facing facing);
     void add_wait(int wait);
 
-  private:
+  protected:
 
     Role role_;
     Facing facing_;
+
+  private:
     std::unique_ptr<SpriteMap> sprites_;
     int wait_;
 };

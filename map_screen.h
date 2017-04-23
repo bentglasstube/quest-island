@@ -2,6 +2,8 @@
 
 #include "screen.h"
 
+#include <memory>
+
 #include "character.h"
 #include "map.h"
 

@@ -12,6 +12,7 @@ cc_library(
     srcs = ["character.cc"],
     hdrs = ["character.h"],
     deps = [
+        ":map",
         "@libgam//:graphics",
         "@libgam//:spritemap",
     ],
@@ -64,7 +65,20 @@ cc_library(
         ":character",
         ":island",
         ":map",
+        ":npc",
         "@libgam//:screen",
+    ],
+)
+
+cc_library(
+    name = "npc",
+    srcs = ["npc.cc"],
+    hdrs = ["npc.h"],
+    deps = [
+        ":character",
+        "@libgam//:backdrop",
+        "@libgam//:screen",
+        "@libgam//:text",
     ],
 )
 
