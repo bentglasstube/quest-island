@@ -25,7 +25,6 @@ Quest ideas:
   Kill monster (requires weapon)
 
 Polish ideas:
-  Spicy Chicken
   Clouds
   Smooth walking
   Music to ogg

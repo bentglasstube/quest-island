@@ -42,6 +42,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "item",
+    srcs = ["item.cc"],
+    hdrs = ["item.h"],
+    deps = [
+        "@libgam//:graphics",
+        "@libgam//:spritemap",
+    ],
+)
+
 cc_binary(
     name = "ld38",
     data = ["//content"],
