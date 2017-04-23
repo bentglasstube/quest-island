@@ -32,10 +32,15 @@ bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
     Island* i = dynamic_cast<Island*>(island_.get());
     map_ = i->get_cave(pos.first, pos.second);
 
-    if (!map_) {
+    if (map_) {
+      bump_player();
+    } else {
       std::cerr << "Couldn't get cave map, staying on island\n";
       map_ = island_.get();
     }
+  } else if (t == Map::Tile::ENTRANCE) {
+    map_ = island_.get();
+    bump_player();
   }
 
   return true;
@@ -48,4 +53,9 @@ void MapScreen::draw(Graphics& graphics) const {
 
 Screen* MapScreen::next_screen() {
   return NULL;
+}
+
+void MapScreen::bump_player() {
+  auto pos = map_->player->position();
+  map_->player->set_position(pos.first, pos.second + 1);
 }

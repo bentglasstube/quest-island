@@ -25,6 +25,7 @@ Quest ideas:
   Kill monster (requires weapon)
 
 Polish ideas:
+  Cave transition
   Spicy Chicken
   Clouds
   Smooth walking

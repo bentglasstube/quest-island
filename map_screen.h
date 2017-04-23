@@ -23,4 +23,6 @@ class MapScreen : public Screen {
 
     std::unique_ptr<Map> island_;
     std::unique_ptr<Character> player_;
+
+    void bump_player();
 };

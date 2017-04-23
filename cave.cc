@@ -99,7 +99,7 @@ void Cave::place_entrance() {
       --cy;
     }
     add_overlay(cx, cy + 1, Tile::ENTRANCE);
-    player->set_position(cx, cy + 2);
+    player->set_position(cx, cy + 1);
   } else {
     while (get_tile(cx, cy) == Tile::WALL) {
       ++cy;
@@ -109,6 +109,6 @@ void Cave::place_entrance() {
       }
     }
     add_overlay(cx, cy - 1, Tile::ENTRANCE);
-    player->set_position(cx, cy);
+    player->set_position(cx, cy - 1);
   }
 }
