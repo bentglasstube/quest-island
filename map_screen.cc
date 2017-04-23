@@ -5,8 +5,10 @@
 #include "island.h"
 
 void MapScreen::init() {
-  map_.reset(new Island());
-  map_->generate();
+  island_.reset(new Island());
+  island_->generate();
+
+  map_ = island_.get();
 }
 
 bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
@@ -24,11 +26,16 @@ bool MapScreen::update(const Input& input, Audio&, unsigned int elapsed) {
     map_->player->stop();
   }
 
-  // TODO check for cave
   auto pos = map_->player->position();
   const Map::Tile t = map_->get_tile(pos.first, pos.second);
   if (t == Map::Tile::CAVE) {
-    std::cerr << "Cave entrance!\n";
+    Island* i = dynamic_cast<Island*>(island_.get());
+    map_ = i->get_cave(pos.first, pos.second);
+
+    if (!map_) {
+      std::cerr << "Couldn't get cave map, staying on island\n";
+      map_ = island_.get();
+    }
   }
 
   return true;

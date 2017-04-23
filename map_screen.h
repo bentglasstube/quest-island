@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "cave.h"
 #include "character.h"
 #include "map.h"
 
@@ -18,6 +19,8 @@ class MapScreen : public Screen {
 
   private:
 
-    std::unique_ptr<Map> map_;
+    Map* map_;
+
+    std::unique_ptr<Map> island_;
     std::unique_ptr<Character> player_;
 };

@@ -9,6 +9,8 @@ class Island : public Map {
     Tile get_tile(int x, int y) const override;
     void generate(unsigned int seed) override;
 
+    Cave* get_cave(int x, int y);
+
   private:
 
     const float NOISE_ZOOM = 0.03f;
