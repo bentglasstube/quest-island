@@ -10,6 +10,8 @@ void MapScreen::init() {
   island_->generate(23982374);
 
   map_ = island_.get();
+  state_ = DisplayState::FADEIN;
+  fade_time_ = FADE_DURATION;
 }
 
 bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
@@ -75,21 +77,32 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
         }
       }
     }
+  }
 
+  if (state_ == DisplayState::FADEOUT) {
+    map_->player->stop();
+    fade_time_ -= elapsed;
+
+    if (fade_time_ < 0) {
+      map_ = next_map_;
+      next_map_ = NULL;
+      state_ = DisplayState::FADEIN;
+      fade_time_ = FADE_DURATION;
+    }
+
+  } else if (state_ == DisplayState::FADEIN) {
+    fade_time_ -= elapsed;
+    if (fade_time_ < 0) {
+      state_ = DisplayState::PLAYING;
+    }
+
+  } else {
     auto pos = map_->player->position();
     const Map::Tile t = map_->get_tile(pos.first, pos.second);
     if (t == Map::Tile::CAVE) {
-      map_ = map_->get_cave(pos.first, pos.second);
-
-      if (map_) {
-        bump_player();
-      } else {
-        std::cerr << "Couldn't get cave map, staying on island\n";
-        map_ = island_.get();
-      }
+      switch_maps(map_->get_cave(pos.first, pos.second));
     } else if (t == Map::Tile::ENTRANCE) {
-      map_ = island_.get();
-      bump_player();
+      switch_maps(island_.get());
     }
   }
 
@@ -103,13 +116,42 @@ void MapScreen::draw(Graphics& graphics) const {
   if (dialog_) {
     dialog_->draw(graphics, 8, 8, graphics.width() - 16, 64);
   }
+
+  int width = 0;
+  switch (state_) {
+    case DisplayState::FADEIN:
+      width = graphics.width() / 2 * fade_time_ / FADE_DURATION;
+      break;
+
+    case DisplayState::FADEOUT:
+      width = graphics.width() / 2 * (FADE_DURATION - fade_time_) / FADE_DURATION;
+      break;
+
+    default:
+      width = 0;
+      break;
+  }
+
+  if (width > 0) {
+    SDL_Rect curtain = {0, 0, width, graphics.height()};
+    graphics.draw_rect(&curtain, 0x000000ff, true);
+    curtain.x = graphics.width() - width;
+    graphics.draw_rect(&curtain, 0x000000ff, true);
+  }
 }
 
 Screen* MapScreen::next_screen() {
   return NULL;
 }
 
-void MapScreen::bump_player() {
-  auto pos = map_->player->position();
-  map_->player->set_position(pos.first, pos.second + 1);
+void MapScreen::switch_maps(Map* next_map) {
+  if (next_map) {
+    next_map_ = next_map;
+
+    /* auto pos = next_map_->player->position(); */
+    /* next_map_->player->set_position(pos.first, pos.second + 1); */
+
+    state_ = DisplayState::FADEOUT;
+    fade_time_ = FADE_DURATION;
+  }
 }

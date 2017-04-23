@@ -20,11 +20,20 @@ class MapScreen : public Screen {
 
   private:
 
-    Map* map_;
+    static const int FADE_DURATION = 2000;
+
+    enum class DisplayState {
+      PLAYING, FADEOUT, FADEIN
+    };
+
+    DisplayState state_;
+    int fade_time_;
+
+    Map *map_, *next_map_;
 
     std::unique_ptr<Map> island_;
     std::unique_ptr<Character> player_;
     std::unique_ptr<Dialog> dialog_;
 
-    void bump_player();
+    void switch_maps(Map* next_map);
 };
