@@ -22,6 +22,7 @@ class Dialog {
 
     std::unique_ptr<Text> text_;
     const std::string message_;
-    int char_, timer_;
+    size_t char_;
+    int timer_;
 
 };

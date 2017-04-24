@@ -137,10 +137,10 @@ const Character* Map::get_npc(int x, int y) const {
   return NULL;
 }
 
-Item* Map::open_chest(int x, int y) {
+Item* Map::open_chest(int, int) {
   return NULL;
 }
 
-Map* Map::get_cave(int x, int y) {
+Map* Map::get_cave(int, int) {
   return NULL;
 }

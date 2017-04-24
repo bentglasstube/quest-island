@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character::Character(Role role, int x, int y) : role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0), gift(Item::Type::TORCH) {
+Character::Character(Role role, int x, int y) : gift(Item::Type::TORCH), role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0) {
   sprites_.reset(new SpriteMap("character.png", 4, 8, 8));
 }
 
@@ -66,6 +66,7 @@ std::string Character::name() const {
     case Role::PEASANT:  return "peasant";
     case Role::PRINCESS: return "princess";
   }
+  return "stranger";
 }
 
 std::string Character::quest_hint() const {

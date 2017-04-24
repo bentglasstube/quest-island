@@ -62,6 +62,8 @@ std::string Item::name() const {
     case Type::SHIELD:
       return "Shield";
   }
+
+  return "Unknown";
 }
 
 std::string Item::description() const {
@@ -114,4 +116,6 @@ std::string Item::description() const {
     case Type::SHIELD:
       return "A garden variety shield.\nThe cross painted on it\nsomehow slipped by the\nlocalization team.";
   }
+
+  return "Oh dear, this should\nnot have happened.";
 }
