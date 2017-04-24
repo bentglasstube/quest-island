@@ -44,4 +44,5 @@ class MapScreen : public Screen {
     void switch_maps(Map* next_map);
     void handle_chest(Audio& audio, int x, int y);
     bool player_has(Item::Type item) const;
+    void get_item(Audio& audio, Item::Type item);
 };

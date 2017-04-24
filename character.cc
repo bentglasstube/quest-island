@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character::Character(Role role, int x, int y) : role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0) {
+Character::Character(Role role, int x, int y) : role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0), gift(Item::Type::TORCH) {
   sprites_.reset(new SpriteMap("character.png", 4, 8, 8));
 }
 

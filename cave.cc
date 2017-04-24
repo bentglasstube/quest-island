@@ -42,7 +42,7 @@ std::string Cave::music_type() const {
 }
 
 float Cave::visibility() const {
-  return 0.20f;
+  return 0.20f * 5;
 }
 
 Item* Cave::open_chest(int x, int y) {

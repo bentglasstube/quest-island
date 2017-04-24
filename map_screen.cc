@@ -61,7 +61,14 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
       const Character* npc = map_->get_npc(p.first, p.second);
       if (npc) {
 
-        dialog_.reset(new Dialog(npc->quest_hint()));
+        if (player_has(npc->wants)) {
+          Item prize(npc->gift);
+          dialog_.reset(new Dialog("Thanks so much!  You can have\nthis " + prize.name() + "."));
+          audio.play_sample("fanfare.wav");
+          inventory_.insert(prize.type());
+        } else {
+          dialog_.reset(new Dialog(npc->quest_hint()));
+        }
 
       } else {
         const Map::Tile t = map_->get_tile(p.first, p.second);
@@ -191,7 +198,6 @@ void MapScreen::switch_maps(Map* next_map) {
   if (next_map) {
     next_map_ = next_map;
 
-    // TODO investigate this
     auto pos = next_map_->player->position();
     next_map_->player->set_position(pos.first, pos.second + 1);
 

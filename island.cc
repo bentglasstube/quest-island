@@ -187,8 +187,7 @@ void Island::place_town() {
 }
 
 Character* Island::place_npc(Character::Role role) {
-  /* std::normal_distribution<float> normal(0, 100); */
-  std::normal_distribution<float> normal(0, 5);
+  std::normal_distribution<float> normal(0, 100);
 
   while (true) {
     int cx = normal(rand_);
