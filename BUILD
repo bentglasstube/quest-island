@@ -57,7 +57,7 @@ cc_library(
 )
 
 cc_binary(
-    name = "ld38",
+    name = "quest-island",
     data = ["//content"],
     linkopts = [
         "-lSDL2",

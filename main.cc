@@ -5,7 +5,7 @@
 int main(int, char**) {
   Game::Config config;
 
-  config.graphics.title = "Ludum Dare 38";
+  config.graphics.title = "Quest Island";
   config.graphics.width = 256;
   config.graphics.height = 240;
   config.graphics.fullscreen = true;
