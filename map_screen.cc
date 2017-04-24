@@ -16,6 +16,8 @@ void MapScreen::init() {
 
 bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
 
+  if (input.key_pressed(SDL_SCANCODE_R)) init();
+
   if (input.key_pressed(SDL_SCANCODE_RETURN)) {
     if (paused_) {
       paused_.reset();
