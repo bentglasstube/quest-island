@@ -1,6 +1,6 @@
 #include "pause_menu.h"
 
-PauseMenu::PauseMenu(std::set<Item::Type> inventory) : inventory_(inventory) {
+PauseMenu::PauseMenu(std::set<Item::Type> inventory) : inventory_(inventory), selected_(0) {
   sprites_.reset(new SpriteMap("box.png", 3, 8, 8));
   text_.reset(new Text("text.png"));
 }
