@@ -59,6 +59,7 @@ $(APP_NAME).app: $(EXECUTABLE) launcher $(CONTENT) Info.plist
 	cp Info.plist $(APP_NAME).app/Contents/Info.plist
 	cp -R /Library/Frameworks/SDL2.framework $(APP_NAME).app/Contents/Frameworks/SDL2.framework
 	cp -R /Library/Frameworks/SDL2_mixer.framework $(APP_NAME).app/Contents/Frameworks/SDL2_mixer.framework
+	cp -R /Library/Frameworks/SDL2_image.framework $(APP_NAME).app/Contents/Frameworks/SDL2_image.framework
 
 clean:
 	rm -rf $(BUILDDIR) $(APP_NAME).app $(PACKAGE)
