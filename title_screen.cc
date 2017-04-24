@@ -21,5 +21,5 @@ Screen* TitleScreen::next_screen() {
 }
 
 std::string TitleScreen::get_music_track() const {
-  return "island.wav";
+  return "island.ogg";
 }

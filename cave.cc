@@ -38,7 +38,7 @@ void Cave::generate(unsigned int seed) {
 }
 
 std::string Cave::music_type() const {
-  return "cave.wav";
+  return "cave.ogg";
 }
 
 float Cave::visibility() const {

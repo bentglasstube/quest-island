@@ -120,7 +120,7 @@ void Island::generate(unsigned int seed) {
 }
 
 std::string Island::music_type() const {
-  return "island.wav";
+  return "island.ogg";
 }
 
 Map* Island::get_cave(int x, int y) {

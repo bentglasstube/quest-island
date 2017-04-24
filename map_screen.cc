@@ -191,7 +191,7 @@ Screen* MapScreen::next_screen() {
 
 std::string MapScreen::get_music_track() const {
   if (map_) return map_->music_type();
-  else return "island.wav";
+  else return "island.ogg";
 }
 
 void MapScreen::switch_maps(Map* next_map) {
