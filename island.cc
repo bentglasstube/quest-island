@@ -69,7 +69,7 @@ void Island::generate(unsigned int seed) {
     place_town();
   }
 
-  needs.insert(set_npc_want(place_npc(Character::Role::WIZARD), {
+  std::set<Item::Type> wizard_wants = {
     Item::Type::LOG,
     Item::Type::FISH,
     Item::Type::KEY,
@@ -78,9 +78,9 @@ void Island::generate(unsigned int seed) {
     Item::Type::CHICKEN,
     Item::Type::POTION,
     Item::Type::BAG,
-  }));
+  };
 
-  needs.insert(set_npc_want(place_npc(Character::Role::KNIGHT), {
+  std::set<Item::Type> knight_wants = {
     Item::Type::LOG,
     Item::Type::FISH,
     Item::Type::KEY,
@@ -88,9 +88,9 @@ void Island::generate(unsigned int seed) {
     Item::Type::BAG,
     Item::Type::SWORD,
     Item::Type::SHIELD,
-  }));
+  };
 
-  needs.insert(set_npc_want(place_npc(Character::Role::PRINCESS), {
+  std::set<Item::Type> princess_wants = {
     Item::Type::LOG,
     Item::Type::FISH,
     Item::Type::KEY,
@@ -98,7 +98,26 @@ void Island::generate(unsigned int seed) {
     Item::Type::CHICKEN,
     Item::Type::RING,
     Item::Type::BAG,
-  }));
+  };
+
+  Character* wizard   = place_npc(Character::Role::WIZARD);
+  Character* knight   = place_npc(Character::Role::KNIGHT);
+  Character* princess = place_npc(Character::Role::PRINCESS);
+
+  set_npc_want(wizard, wizard_wants);
+
+  knight_wants.erase(wizard->wants);
+  princess_wants.erase(wizard->wants);
+
+  set_npc_want(knight, knight_wants);
+
+  princess_wants.erase(knight->wants);
+
+  set_npc_want(princess, princess_wants);
+
+  needs.insert(wizard->wants);
+  needs.insert(knight->wants);
+  needs.insert(princess->wants);
 
   auto fish = needs.find(Item::Type::FISH);
   if (fish != needs.end()) {
