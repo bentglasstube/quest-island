@@ -70,6 +70,8 @@ void Island::generate(unsigned int seed) {
   }
 
   needs.insert(set_npc_want(place_npc(Character::Role::WIZARD), {
+    Item::Type::LOG,
+    Item::Type::FISH,
     Item::Type::KEY,
     Item::Type::BOOK,
     Item::Type::SKULL,
@@ -79,6 +81,8 @@ void Island::generate(unsigned int seed) {
   }));
 
   needs.insert(set_npc_want(place_npc(Character::Role::KNIGHT), {
+    Item::Type::LOG,
+    Item::Type::FISH,
     Item::Type::KEY,
     Item::Type::CHICKEN,
     Item::Type::BAG,
@@ -87,6 +91,8 @@ void Island::generate(unsigned int seed) {
   }));
 
   needs.insert(set_npc_want(place_npc(Character::Role::PRINCESS), {
+    Item::Type::LOG,
+    Item::Type::FISH,
     Item::Type::KEY,
     Item::Type::CROWN,
     Item::Type::CHICKEN,
