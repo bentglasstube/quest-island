@@ -17,7 +17,7 @@ ifeq ($(UNAME), Linux)
 endif
 ifeq ($(UNAME), Darwin)
 	PACKAGE=$(NAME)-osx.tgz
-	LDLIBS=-framework SDL2 -framework SDL2_mixer -rpath @executable_path/../Frameworks
+	LDLIBS=-framework SDL2 -framework SDL2_mixer -framework SDL2_image -framework SDL2_ttf -rpath @executable_path/../Frameworks
 	CFLAGS+=-mmacosx-version-min=10.9
 endif
 
@@ -44,7 +44,7 @@ $(NAME)-linux.tgz: $(EXECUTABLE)
 	tar zcf $@ $(NAME)
 	rm -rf $(NAME)
 
-$(NAME)-osx.tgz: dotapp
+$(NAME)-osx.tgz: $(APP_NAME).app
 	mkdir $(NAME)
 	cp -r $(APP_NAME).app $(NAME)/.
 	tar zcf $@ $(NAME)
