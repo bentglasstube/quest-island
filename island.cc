@@ -104,16 +104,16 @@ void Island::generate(unsigned int seed) {
   Character* knight   = place_npc(Character::Role::KNIGHT);
   Character* princess = place_npc(Character::Role::PRINCESS);
 
-  set_npc_want(wizard, wizard_wants);
+  wizard->wants = random_from_set(wizard_wants);
 
   knight_wants.erase(wizard->wants);
   princess_wants.erase(wizard->wants);
 
-  set_npc_want(knight, knight_wants);
+  knight->wants = random_from_set(knight_wants);
 
   princess_wants.erase(knight->wants);
 
-  set_npc_want(princess, princess_wants);
+  princess->wants = random_from_set(princess_wants);
 
   needs.insert(wizard->wants);
   needs.insert(knight->wants);
@@ -224,10 +224,9 @@ Character* Island::place_npc(Character::Role role) {
   }
 }
 
-Item::Type Island::set_npc_want(Character* npc, std::set<Item::Type> wants) {
-  std::uniform_int_distribution<int> uni(0, wants.size() - 1);
-  auto i = wants.begin();
+template <class T> T Island::random_from_set(std::set<T> items) {
+  std::uniform_int_distribution<int> uni(0, items.size() - 1);
+  auto i = items.begin();
   std::advance(i, uni(rand_));
-
-  return npc->wants = *i;
+  return *i;
 }

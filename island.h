@@ -30,5 +30,5 @@ class Island : public Map {
     void place_town();
     Character* place_npc(Character::Role role);
 
-    Item::Type set_npc_want(Character* npc, std::set<Item::Type> wants);
+    template <class T> T random_from_set(std::set<T> items);
 };
