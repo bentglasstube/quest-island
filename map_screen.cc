@@ -27,8 +27,7 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (dialog_) {
 
     dialog_->update(audio, elapsed);
-    if (input.any_pressed()) dialog_->advance();
-    if (dialog_->all_done()) dialog_.reset();
+    if (input.any_pressed() && dialog_->done()) dialog_.reset();
 
   } else if (paused_) {
 
@@ -61,10 +60,8 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
 
       const Character* npc = map_->get_npc(p.first, p.second);
       if (npc) {
-        std::ostringstream text;
-        text  << "Hello, I am the " << npc->name() << ".";
-        dialog_.reset(new Dialog());
-        dialog_->add_page(text.str());
+
+        dialog_.reset(new Dialog(npc->quest_hint()));
 
       } else {
         const Map::Tile t = map_->get_tile(p.first, p.second);
@@ -76,13 +73,11 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
             break;
 
           case Map::Tile::EMPTY:
-            dialog_.reset(new Dialog());
-            dialog_->add_page("It's empty.");
+            dialog_.reset(new Dialog("It's empty."));
             break;
 
           case Map::Tile::TOWN:
-            dialog_.reset(new Dialog());
-            dialog_->add_page("Looks like nobody is home.");
+            dialog_.reset(new Dialog("Looks like nobody is home."));
             break;
 
           case Map::Tile::TREES:
@@ -93,12 +88,10 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
               if (!player_has(Item::Type::LOG)) {
                 inventory_.insert(Item::Type::LOG);
                 audio.play_sample("fanfare.wav");
-                dialog_.reset(new Dialog());
-                dialog_->add_page("You cut down the tree and\ngot a log!");
+                dialog_.reset(new Dialog("You cut down the tree and\ngot a log!"));
               }
             } else {
-              dialog_.reset(new Dialog());
-              dialog_->add_page("These are some very lovely\npine trees.");
+              dialog_.reset(new Dialog("These are some very lovely\npine trees."));
             }
             break;
 
@@ -108,18 +101,15 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
                 inventory_.insert(Item::Type::FISH);
                 audio.play_sample("fanfare.wav");
 
-                dialog_.reset(new Dialog());
-                dialog_->add_page("You caught a fresh fish!");
+                dialog_.reset(new Dialog("You caught a fresh fish!"));
               }
             } else {
-              dialog_.reset(new Dialog());
-              dialog_->add_page("You can see plenty of fish\nswimming in the clear water.");
+              dialog_.reset(new Dialog("You can see plenty of fish\nswimming in the clear water."));
             }
             break;
 
           default:
-            dialog_.reset(new Dialog());
-            dialog_->add_page("You looked all around, but\nyou didn't find anything.");
+            dialog_.reset(new Dialog("You looked all around, but\nyou didn't find anything."));
             break;
         }
       }
@@ -162,7 +152,7 @@ void MapScreen::draw(Graphics& graphics) const {
   const int visibility = 25 * map_->visibility() * (player_has(Item::Type::TORCH) ? 3 : 1);
   map_->draw(graphics, 0, 0, graphics.width(), graphics.height(), visibility);
 
-  if (dialog_) dialog_->draw(graphics, 0, 8, graphics.width(), 64);
+  if (dialog_) dialog_->draw(graphics, 8, 8);
   if (paused_) paused_->draw(graphics, 16, 16);
 
   int width = 0;
@@ -222,8 +212,7 @@ void MapScreen::handle_chest(Audio& audio, int x, int y) {
     msg << "Huh, there was nothing inside.";
   }
 
-  dialog_.reset(new Dialog());
-  dialog_->add_page(msg.str());
+  dialog_.reset(new Dialog(msg.str()));
 }
 
 bool MapScreen::player_has(Item::Type item) const {

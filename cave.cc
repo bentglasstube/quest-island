@@ -34,14 +34,7 @@ void Cave::generate(unsigned int seed) {
 
   place_entrance();
 
-  std::uniform_int_distribution<int> n(1, 3);
-  const int chests = n(rand_);
-  for (int i = 0 ; i < chests; ++i) {
-    place_chest();
-  }
-
   std::cerr << "Generated cave #" << seed << "\n";
-  std::cerr << chests << " chests\n";
 }
 
 std::string Cave::music_type() const {
@@ -89,9 +82,8 @@ int Cave::walls_within(int x, int y, int r) const {
   return count;
 }
 
-void Cave::place_chest() {
+void Cave::place_chest(Item::Type treasure) {
   std::normal_distribution<float> normal(0, 100);
-  std::uniform_int_distribution<int> uni(0, 15);
 
   for (int i = 0; i < 100; ++i) {
     int cx = normal(rand_);
@@ -100,9 +92,7 @@ void Cave::place_chest() {
     if (get_tile(cx, cy) == Tile::DIRT) {
       data_[cy][cx] = Tile::CHEST;
 
-      Item::Type item = static_cast<Item::Type>(uni(rand_));
-      auto r = chests_.emplace(std::make_pair(cx, cy), item);
-
+      auto r = chests_.emplace(std::make_pair(cx, cy), treasure);
       std::cerr << "Placed " << r.first->second.name() << " in chest at " << cx << ", " << cy << "\n";
 
       return;

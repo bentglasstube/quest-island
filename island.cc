@@ -40,6 +40,25 @@ void Island::generate(unsigned int seed) {
 
   std::uniform_int_distribution<int> n(1, 3);
 
+  std::set<Item::Type> treasures = {
+    Item::Type::AXE,
+    Item::Type::ROD,
+    Item::Type::TORCH,
+    Item::Type::KEY,
+    Item::Type::BOOK,
+    Item::Type::SKULL,
+    Item::Type::CROWN,
+    Item::Type::FRESH,
+    Item::Type::CHICKEN,
+    Item::Type::POTION,
+    Item::Type::RING,
+    Item::Type::BAG,
+    Item::Type::SWORD,
+    Item::Type::SHIELD,
+  };
+
+  std::set<Item::Type> needs;
+
   const int caves = n(rand_);
   for (int i = 0; i < caves; ++i) {
     place_cave();
@@ -50,13 +69,54 @@ void Island::generate(unsigned int seed) {
     place_town();
   }
 
-  place_npc(Character::Role::WIZARD);
-  place_npc(Character::Role::KNIGHT);
-  place_npc(Character::Role::PRINCESS);
+  needs.insert(set_npc_want(place_npc(Character::Role::WIZARD), {
+    Item::Type::KEY,
+    Item::Type::BOOK,
+    Item::Type::SKULL,
+    Item::Type::CHICKEN,
+    Item::Type::POTION,
+    Item::Type::BAG,
+  }));
+
+  needs.insert(set_npc_want(place_npc(Character::Role::KNIGHT), {
+    Item::Type::KEY,
+    Item::Type::CHICKEN,
+    Item::Type::BAG,
+    Item::Type::SWORD,
+    Item::Type::SHIELD,
+  }));
+
+  needs.insert(set_npc_want(place_npc(Character::Role::PRINCESS), {
+    Item::Type::KEY,
+    Item::Type::CROWN,
+    Item::Type::CHICKEN,
+    Item::Type::RING,
+    Item::Type::BAG,
+  }));
+
+  auto fish = needs.find(Item::Type::FISH);
+  if (fish != needs.end()) {
+    needs.erase(fish);
+    needs.insert(Item::Type::ROD);
+  }
+
+  auto wood = needs.find(Item::Type::LOG);
+  if (wood != needs.end()) {
+    needs.erase(wood);
+    needs.insert(Item::Type::AXE);
+  }
 
   std::cerr << "Generated island #" << seed << "\n";
   std::cerr << caves << " caves\n";
   std::cerr << towns << " towns\n";
+
+  auto cave = caves_.begin();
+  for (auto i = needs.begin(); i != needs.end(); ++i) {
+    cave->second.place_chest(*i);
+
+    cave++;
+    if (cave == caves_.end()) cave = caves_.begin();
+  }
 }
 
 std::string Island::music_type() const {
@@ -126,17 +186,24 @@ void Island::place_town() {
   }
 }
 
-void Island::place_npc(Character::Role role) {
-  std::normal_distribution<float> normal(0, 100);
+Character* Island::place_npc(Character::Role role) {
+  /* std::normal_distribution<float> normal(0, 100); */
+  std::normal_distribution<float> normal(0, 5);
 
   while (true) {
     int cx = normal(rand_);
     int cy = normal(rand_);
 
     if (walkable(cx, cy)) {
-      add_npc(role, cx, cy);
-      return;
+      return add_npc(role, cx, cy);
     }
   }
 }
 
+Item::Type Island::set_npc_want(Character* npc, std::set<Item::Type> wants) {
+  std::uniform_int_distribution<int> uni(0, wants.size() - 1);
+  auto i = wants.begin();
+  std::advance(i, uni(rand_));
+
+  return npc->wants = *i;
+}

@@ -119,8 +119,9 @@ void Map::add_overlay(int x, int y, Tile tile) {
   overlays_.insert({ std::make_pair(x, y), tile });
 }
 
-void Map::add_npc(Character::Role role, int x, int y) {
+Character* Map::add_npc(Character::Role role, int x, int y) {
   npcs_.emplace_back(role, x, y);
+  return &(npcs_.back());
 }
 
 void Map::generate() {

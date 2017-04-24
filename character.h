@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "graphics.h"
+#include "item.h"
 #include "spritemap.h"
 
 class Character {
@@ -28,6 +29,10 @@ class Character {
     void set_position(int x, int y);
 
     std::string name() const;
+    std::string quest_hint() const;
+
+    Item::Type wants, gift;
+    bool satisfied;
 
   private:
 

@@ -67,3 +67,40 @@ std::string Character::name() const {
     case Role::PRINCESS: return "princess";
   }
 }
+
+std::string Character::quest_hint() const {
+  switch (wants) {
+    case Item::Type::FISH:
+    case Item::Type::CHICKEN:
+      return "I am so hungry.  Do you\nhave any vittles?";
+
+    case Item::Type::LOG:
+      return "It's so cold out here.\nI wish I had a campfire.";
+
+    case Item::Type::KEY:
+      return "I am locked out of my\nhouse.  Where did I leave it?";
+
+    case Item::Type::BOOK:
+      return "I have forgotten all\nof my incantations!";
+
+    case Item::Type::SKULL:
+      return "I need something spooky\nfor my magic...";
+
+    case Item::Type::CROWN:
+    case Item::Type::RING:
+      return "How will anyone know\nhow I am without my jewelry?";
+
+    case Item::Type::POTION:
+      return "I'll never find all\nthe ingredients to make\nanother one...";
+
+    case Item::Type::BAG:
+      return "I was supposed to wash\nthe laundry, but where\ndid I leave it?";
+
+    case Item::Type::SWORD:
+    case Item::Type::SHIELD:
+      return "Someone has taken my\nequipment while I was\nasleep!";
+
+    default:
+      return "Hello, I am the " + name();
+  }
+}

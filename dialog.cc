@@ -2,67 +2,34 @@
 
 #include <sstream>
 
-Dialog::Dialog() : page_(0), char_(0), timer_(0) {
-  sprites_.reset(new SpriteMap("dialog.png", 3, 8, 8));
+Dialog::Dialog(const std::string& message) : message_(message), char_(0), timer_(0) {
   text_.reset(new Text("text.png"));
-
-  std::random_device r;
-  engine_.seed(r());
-}
-
-void Dialog::add_page(const std::string& text) {
-  pages_.push_back(text);
 }
 
 void Dialog::update(Audio& audio, unsigned int elapsed) {
-  if (!page_done()) {
+  if (!done()) {
     timer_ += elapsed;
     if (timer_ > RATE) {
-      std::ostringstream sample;
-      std::uniform_int_distribution<int> d(1, 4);
-
-      sample << "beep" << d(engine_) << ".wav";
-      audio.play_sample(sample.str());
       timer_ -= RATE;
       ++char_;
+
+      switch (message_[char_]) {
+        case ' ':
+        case '\n':
+          break;
+
+        default:
+          audio.play_sample("beep3.wav");
+          break;
+      }
     }
   }
 }
 
-void Dialog::draw(Graphics& graphics, int x, int y, int w, int h) const {
-  // TODO refactor to box-drawing
-  sprites_->draw(graphics, 0, x, y);
-  for (int iy = y + 8; iy < y + h - 8; iy += 8) {
-    sprites_->draw(graphics, 3, x, iy);
-  }
-  sprites_->draw(graphics, 6, x, y + h - 8);
-
-  for (int ix = x + 8; ix < x + w - 8; ix += 8) {
-    sprites_->draw(graphics, 1, ix, y);
-    for (int iy = y + 8; iy < y + h - 8; iy += 8) {
-      sprites_->draw(graphics, 4, ix, iy);
-    }
-    sprites_->draw(graphics, 7, ix, y + h - 8);
-  }
-
-  sprites_->draw(graphics, 2, x + w - 8, y);
-  for (int iy = y + 8; iy < y + h - 8; iy += 8) {
-    sprites_->draw(graphics, 5, x + w - 8, iy);
-  }
-  sprites_->draw(graphics, 8, x + w - 8, y + h - 8);
-
-  text_->draw(graphics, pages_[page_].substr(0, char_), x + 12, y + 12);
+void Dialog::draw(Graphics& graphics, int x, int y) const {
+  text_->draw(graphics, message_.substr(0, char_), x, y);
 }
 
-void Dialog::advance() {
-  if (page_done()) ++page_;
+bool Dialog::done() const {
+  return char_ >= message_.length();
 }
-
-bool Dialog::page_done() const {
-  return all_done() || char_ >= pages_[page_].length();
-}
-
-bool Dialog::all_done() const {
-  return page_ >= pages_.size();
-}
-

@@ -1,7 +1,10 @@
 #pragma once
 
-#include "map.h"
+#include <set>
+
 #include "cave.h"
+#include "item.h"
+#include "map.h"
 
 class Island : public Map {
   public:
@@ -25,6 +28,7 @@ class Island : public Map {
 
     void place_cave();
     void place_town();
-    void place_npc(Character::Role role);
+    Character* place_npc(Character::Role role);
 
+    Item::Type set_npc_want(Character* npc, std::set<Item::Type> wants);
 };

@@ -15,6 +15,7 @@ cc_library(
     srcs = ["character.cc"],
     hdrs = ["character.h"],
     deps = [
+        ":item",
         "@libgam//:graphics",
         "@libgam//:spritemap",
     ],
@@ -27,7 +28,6 @@ cc_library(
     deps = [
         "@libgam//:audio",
         "@libgam//:graphics",
-        "@libgam//:spritemap",
         "@libgam//:text",
     ],
 )
@@ -41,6 +41,7 @@ cc_library(
     ],
     deps = [
         ":cave",
+        ":item",
         ":map"
     ],
 )

@@ -53,7 +53,7 @@ class Map {
     std::map<std::pair<int, int>, Tile> overlays_;
     std::vector<Character> npcs_;
 
-    void add_npc(Character::Role role, int x, int y);
+    Character* add_npc(Character::Role role, int x, int y);
 
   private:
 
