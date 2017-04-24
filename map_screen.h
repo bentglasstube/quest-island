@@ -14,11 +14,11 @@
 class MapScreen : public Screen {
   public:
 
-    void init();
-    bool update(const Input& input, Audio&, unsigned int elapsed);
-    void draw(Graphics& graphics) const;
+    void init() override;
+    bool update(const Input& input, Audio&, unsigned int elapsed) override;
+    void draw(Graphics& graphics) const override;
 
-    Screen* next_screen();
+    Screen* next_screen() override;
     std::string get_music_track() const override;
 
   private:
