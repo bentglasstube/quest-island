@@ -133,6 +133,46 @@ void Island::generate(unsigned int seed) {
     needs.insert(Item::Type::AXE);
   }
 
+  needs.insert(Item::Type::TORCH);
+
+  for (auto i = needs.begin(); i != needs.end(); ++i) {
+    treasures.erase(*i);
+  }
+
+  for (int i = 0; i < 3; ++i) {
+    const Item::Type item = random_from_set(treasures);
+    needs.insert(item);
+    treasures.erase(item);
+  }
+
+  needs.erase(wizard->wants);
+  wizard->gift = random_from_set(needs);
+  needs.erase(wizard->gift);
+
+  needs.erase(knight->wants);
+  knight->gift = random_from_set(needs);
+  needs.erase(knight->gift);
+
+  needs.erase(princess->wants);
+  princess->gift = random_from_set(needs);
+  needs.erase(princess->gift);
+
+  needs.insert(wizard->wants);
+  needs.insert(knight->wants);
+  needs.insert(princess->wants);
+
+  auto fish2 = needs.find(Item::Type::FISH);
+  if (fish2 != needs.end()) {
+    needs.erase(fish2);
+    needs.insert(Item::Type::ROD);
+  }
+
+  auto wood2 = needs.find(Item::Type::LOG);
+  if (wood2 != needs.end()) {
+    needs.erase(wood2);
+    needs.insert(Item::Type::AXE);
+  }
+
   std::cerr << "Generated island #" << seed << "\n";
   std::cerr << caves << " caves\n";
   std::cerr << towns << " towns\n";
