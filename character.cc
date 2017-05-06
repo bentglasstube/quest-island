@@ -89,7 +89,7 @@ std::string Character::quest_hint() const {
 
     case Item::Type::CROWN:
     case Item::Type::RING:
-      return "How will anyone know\nhow I am without my jewelry?";
+      return "How will anyone know\nwho I am without my jewelry?";
 
     case Item::Type::POTION:
       return "I'll never find all\nthe ingredients to make\nanother one...";
