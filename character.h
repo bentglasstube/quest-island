@@ -32,7 +32,6 @@ class Character {
     std::string quest_hint() const;
 
     Item::Type wants, gift;
-    bool satisfied;
 
   private:
 
