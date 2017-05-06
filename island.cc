@@ -100,6 +100,8 @@ void Island::generate(unsigned int seed) {
     Item::Type::BAG,
   };
 
+  // FIXME terrible design
+  npcs_.reserve(3); // pre-allocate vector so pointers remain valid
   Character* wizard   = place_npc(Character::Role::WIZARD);
   Character* knight   = place_npc(Character::Role::KNIGHT);
   Character* princess = place_npc(Character::Role::PRINCESS);
