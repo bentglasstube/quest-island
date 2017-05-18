@@ -6,17 +6,18 @@ BUILDDIR=build
 OBJECTS=$(patsubst %.cc,$(BUILDDIR)/%.o,$(SOURCES))
 NAME=quest-island
 APP_NAME="Quest Island"
+VERSION=$(shell git describe --dirty)
 
 CC=g++
-CFLAGS=-O3 --std=c++11 -Wall -Wextra -Werror -pedantic -I/home/alan/source/gam
+CFLAGS=-O3 --std=c++11 -Wall -Wextra -Werror -pedantic -I$(HOME)/source/gam $(shell sdl2-config --cflags) -DVERSION=\"$(VERSION)\"
 
 ifeq ($(UNAME), Linux)
-	PACKAGE=$(NAME)-linux.tgz
+	PACKAGE=$(NAME)-linux-$(VERSION).tgz
 	LDFLAGS=-static-libstdc++ -static-libgcc
-	LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer -lSDL2_image -L/home/alan/source/gam -lgam
+	LDLIBS=$(shell sdl2-config --libs) -lSDL2_mixer -lSDL2_image -lSDL2_ttf
 endif
 ifeq ($(UNAME), Darwin)
-	PACKAGE=$(NAME)-osx.tgz
+	PACKAGE=$(NAME)-osx-$(VERSION)tgz
 	LDLIBS=-framework SDL2 -framework SDL2_mixer -framework SDL2_image -framework SDL2_ttf -rpath @executable_path/../Frameworks
 	CFLAGS+=-mmacosx-version-min=10.9
 endif
@@ -29,7 +30,7 @@ run: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LDLIBS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LDLIBS) $(HOME)/source/gam/libgam.a
 
 $(BUILDDIR)/%.o: %.cc
 	@mkdir -p $(BUILDDIR)
@@ -37,14 +38,14 @@ $(BUILDDIR)/%.o: %.cc
 
 package: $(PACKAGE)
 
-$(NAME)-linux.tgz: $(EXECUTABLE)
+$(NAME)-linux-%.tgz: $(EXECUTABLE)
 	mkdir $(NAME)
 	cp $(EXECUTABLE) README.md $(NAME)
 	cp -R content $(NAME)/content
 	tar zcf $@ $(NAME)
 	rm -rf $(NAME)
 
-$(NAME)-osx.tgz: $(APP_NAME).app
+$(NAME)-osx-%.tgz: $(APP_NAME).app
 	mkdir $(NAME)
 	cp -r $(APP_NAME).app $(NAME)/.
 	tar zcf $@ $(NAME)
