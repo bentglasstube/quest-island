@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character::Character(Role role, int x, int y) : wants(Item::Type::FRESH), gift(Item::Type::TORCH), role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0) {
+Character::Character(Role role, int x, int y) : wants(Item::Type::FRESH), gift(Item::Type::TORCH), role_(role), facing_(Facing::DOWN), moving_(false), hinted_(false), x_(x), y_(y), wait_(0) {
   sprites_.reset(new SpriteMap("character.png", 4, 8, 8));
 }
 
@@ -33,6 +33,10 @@ bool Character::moving()  const {
   return moving_;
 }
 
+bool Character::gave_hint() const {
+  return hinted_;
+}
+
 Character::Facing Character::facing() const {
   return facing_;
 }
@@ -48,6 +52,10 @@ void Character::stop() {
 
 void Character::add_wait(int wait) {
   wait_ += wait;
+}
+
+void Character::give_hint() {
+  hinted_ = true;
 }
 
 std::pair<int, int> Character::position() const {

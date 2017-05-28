@@ -60,16 +60,17 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
         case Character::Facing::RIGHT: p.first++;  break;
       }
 
-      const Character* npc = map_->get_npc(p.first, p.second);
+      Character* npc = map_->get_npc(p.first, p.second);
       if (npc) {
 
-        if (player_has(npc->wants)) {
+        if (npc->gave_hint() && player_has(npc->wants)) {
           Item prize(npc->gift);
           dialog_.reset(new Dialog("Thanks so much!  You can have\nthis " + prize.name() + "."));
           audio.play_sample("fanfare.wav");
           inventory_.insert(prize.type());
         } else {
           dialog_.reset(new Dialog(npc->quest_hint()));
+          npc->give_hint();
         }
 
       } else {

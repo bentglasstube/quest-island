@@ -137,6 +137,10 @@ const Character* Map::get_npc(int x, int y) const {
   return NULL;
 }
 
+Character* Map::get_npc(int x, int y) {
+  return const_cast<Character*>(static_cast<const Map*>(this)->get_npc(x, y));
+}
+
 Item* Map::open_chest(int, int) {
   return NULL;
 }

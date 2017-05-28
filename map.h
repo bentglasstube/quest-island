@@ -40,6 +40,7 @@ class Map {
     virtual void generate(unsigned int seed) = 0;
 
     const Character* get_npc(int x, int y) const;
+    Character* get_npc(int x, int y);
 
     virtual Item* open_chest(int x, int y);
     virtual Map* get_cave(int x, int y);

@@ -19,11 +19,13 @@ class Character {
 
     bool waiting() const;
     bool moving() const;
+    bool gave_hint() const;
     Facing facing() const;
 
     void move(Facing facing);
     void stop();
     void add_wait(int wait);
+    void give_hint();
 
     std::pair<int, int> position() const;
     void set_position(int x, int y);
@@ -38,6 +40,6 @@ class Character {
     std::unique_ptr<SpriteMap> sprites_;
     Role role_;
     Facing facing_;
-    bool moving_;
+    bool moving_, hinted_;
     int x_, y_, wait_;
 };
