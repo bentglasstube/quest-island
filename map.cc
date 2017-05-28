@@ -16,7 +16,7 @@ void Map::update(unsigned int elapsed) {
     auto pos = npc.position();
     if (!npc.waiting()) {
       Character::Facing dir = static_cast<Character::Facing>(r(rand_));
-      npc.add_wait(5 * tile_delay(pos.first, pos.second));
+      npc.add_wait(NPC_SLOW_FACTOR * tile_delay(pos.first, pos.second));
       npc.move(dir);
     }
 

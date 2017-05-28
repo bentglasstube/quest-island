@@ -18,6 +18,8 @@ class Map {
   public:
     Map();
 
+    const int NPC_SLOW_FACTOR = 10;
+
     enum class Tile {
       WATER, SAND, GRASS, TREES, SWAMP, MOUNTAINS, TOWN, CAVE,
       DIRT, ENTRANCE, WALL, CHEST, EMPTY, STUMP,
