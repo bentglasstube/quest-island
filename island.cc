@@ -219,7 +219,7 @@ float Island::noise(int x, int y, int z) const {
 }
 
 void Island::place_cave() {
-  std::normal_distribution<float> normal(0, 100);
+  std::normal_distribution<float> normal(0, PLACEMENT_DIST);
 
   while (true) {
     int cx = normal(rand_);
@@ -240,7 +240,7 @@ void Island::place_cave() {
 }
 
 void Island::place_town() {
-  std::normal_distribution<float> normal(0, 100);
+  std::normal_distribution<float> normal(0, PLACEMENT_DIST);
 
   while (true) {
     int cx = normal(rand_);
@@ -254,7 +254,7 @@ void Island::place_town() {
 }
 
 Character* Island::place_npc(Character::Role role) {
-  std::normal_distribution<float> normal(0, 100);
+  std::normal_distribution<float> normal(0, PLACEMENT_DIST);
 
   while (true) {
     int cx = normal(rand_);
