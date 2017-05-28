@@ -63,14 +63,29 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
       Character* npc = map_->get_npc(p.first, p.second);
       if (npc) {
 
-        if (npc->gave_hint() && player_has(npc->wants)) {
-          Item prize(npc->gift);
-          dialog_.reset(new Dialog("Thanks so much!  You can have\nthis " + prize.name() + "."));
-          audio.play_sample("fanfare.wav");
-          inventory_.insert(prize.type());
-        } else {
-          dialog_.reset(new Dialog(npc->quest_hint()));
-          npc->give_hint();
+        switch (npc->state()) {
+
+          case Character::QuestState::NEW:
+            dialog_.reset(new Dialog(npc->quest_hint()));
+            npc->next_quest_state();
+            break;
+
+          case Character::QuestState::WAITING:
+            if (player_has(npc->wants)) {
+              Item prize(npc->gift);
+              dialog_.reset(new Dialog("Thanks so much!  You can have\nthis " + prize.name() + "."));
+              audio.play_sample("fanfare.wav");
+              inventory_.insert(prize.type());
+              npc->next_quest_state();
+            } else {
+              dialog_.reset(new Dialog(npc->quest_hint()));
+            }
+            break;
+
+          case Character::QuestState::COMPLETE:
+            dialog_.reset(new Dialog("Thanks again, you're just\nthe hero this island needs!"));
+            break;
+
         }
 
       } else {
