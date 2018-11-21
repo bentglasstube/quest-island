@@ -1,5 +1,15 @@
 package(default_visibility = ["//visibility:public"])
 
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+load("@mxebzl//tools/windows:rules.bzl", "pkg_winzip")
+
+config_setting(
+    name = "windows",
+    values = {
+        "crosstool_top": "@mxebzl//tools/windows:toolchain",
+    }
+)
+
 cc_library(
     name = "cave",
     srcs = ["cave.cc"],
@@ -63,7 +73,6 @@ cc_binary(
         "-lSDL2",
         "-lSDL2_image",
         "-lSDL2_mixer",
-        "-lSDL2_ttf",
         "-static-libstdc++",
         "-static-libgcc",
     ],
@@ -125,5 +134,24 @@ cc_library(
         "@libgam//:backdrop",
         "@libgam//:screen",
         "@libgam//:text",
+    ],
+)
+
+pkg_winzip(
+    name = "quest-island-windows",
+    files = [
+        ":quest-island",
+        "//content",
+    ],
+)
+
+pkg_tar(
+    name = "quest-island-linux",
+    extension = "tar.gz",
+    strip_prefix = "/",
+    package_dir = "quest-island/",
+    srcs = [
+        ":quest-island",
+        "//content",
     ],
 )
