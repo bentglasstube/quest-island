@@ -51,6 +51,8 @@ class Map {
 
     void add_overlay(int x, int y, Tile tile);
 
+    bool all_quests_done() const;
+
   protected:
     std::default_random_engine rand_;
     std::map<std::pair<int, int>, Tile> overlays_;

@@ -119,6 +119,14 @@ void Map::add_overlay(int x, int y, Tile tile) {
   overlays_.insert({ std::make_pair(x, y), tile });
 }
 
+bool Map::all_quests_done() const {
+  for (auto i = npcs_.begin(); i < npcs_.end(); ++i) {
+    if (i->state() != Character::QuestState::COMPLETE) return false;
+  }
+
+  return true;
+}
+
 Character* Map::add_npc(Character::Role role, int x, int y) {
   npcs_.emplace_back(role, x, y);
   return &(npcs_.back());

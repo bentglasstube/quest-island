@@ -77,6 +77,11 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
               audio.play_sample("fanfare.wav");
               inventory_.insert(prize.type());
               npc->next_quest_state();
+
+              if (map_->all_quests_done()) {
+                // TODO win condition
+              }
+
             } else {
               dialog_.reset(new Dialog(npc->quest_hint()));
             }
