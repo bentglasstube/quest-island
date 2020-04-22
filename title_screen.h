@@ -12,7 +12,8 @@
 class TitleScreen : public Screen {
   public:
 
-    void init() override;
+    TitleScreen();
+
     bool update(const Input& input, Audio& audio, unsigned int elapsed) override;
     void draw(Graphics& graphics) const override;
 
@@ -21,6 +22,6 @@ class TitleScreen : public Screen {
 
   private:
 
-    std::unique_ptr<Text> text_;
-    std::unique_ptr<Backdrop> backdrop_;
+    Text text_;
+    Backdrop backdrop_;
 };
