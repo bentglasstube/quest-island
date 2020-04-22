@@ -1,0 +1,9 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=Quest Island
+Terminal=false
+Icon=icon
+Exec=quest-island
+Categories=Game;

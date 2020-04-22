@@ -18,6 +18,8 @@ class Map {
   public:
     Map();
 
+    const int NPC_SLOW_FACTOR = 10;
+
     enum class Tile {
       WATER, SAND, GRASS, TREES, SWAMP, MOUNTAINS, TOWN, CAVE,
       DIRT, ENTRANCE, WALL, CHEST, EMPTY, STUMP,
@@ -40,6 +42,7 @@ class Map {
     virtual void generate(unsigned int seed) = 0;
 
     const Character* get_npc(int x, int y) const;
+    Character* get_npc(int x, int y);
 
     virtual Item* open_chest(int x, int y);
     virtual Map* get_cave(int x, int y);
@@ -47,6 +50,8 @@ class Map {
     virtual std::string music_type() const = 0;
 
     void add_overlay(int x, int y, Tile tile);
+
+    bool all_quests_done() const;
 
   protected:
     std::default_random_engine rand_;

@@ -16,7 +16,7 @@ void Map::update(unsigned int elapsed) {
     auto pos = npc.position();
     if (!npc.waiting()) {
       Character::Facing dir = static_cast<Character::Facing>(r(rand_));
-      npc.add_wait(5 * tile_delay(pos.first, pos.second));
+      npc.add_wait(NPC_SLOW_FACTOR * tile_delay(pos.first, pos.second));
       npc.move(dir);
     }
 
@@ -119,6 +119,14 @@ void Map::add_overlay(int x, int y, Tile tile) {
   overlays_.insert({ std::make_pair(x, y), tile });
 }
 
+bool Map::all_quests_done() const {
+  for (auto i = npcs_.begin(); i < npcs_.end(); ++i) {
+    if (i->state() != Character::QuestState::COMPLETE) return false;
+  }
+
+  return true;
+}
+
 Character* Map::add_npc(Character::Role role, int x, int y) {
   npcs_.emplace_back(role, x, y);
   return &(npcs_.back());
@@ -135,6 +143,10 @@ const Character* Map::get_npc(int x, int y) const {
     if (x == p.first && y == p.second) return &*i;
   }
   return NULL;
+}
+
+Character* Map::get_npc(int x, int y) {
+  return const_cast<Character*>(static_cast<const Map*>(this)->get_npc(x, y));
 }
 
 Item* Map::open_chest(int, int) {

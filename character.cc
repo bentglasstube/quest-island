@@ -1,6 +1,6 @@
 #include "character.h"
 
-Character::Character(Role role, int x, int y) : wants(Item::Type::FRESH), gift(Item::Type::TORCH), role_(role), facing_(Facing::DOWN), moving_(false), x_(x), y_(y), wait_(0) {
+Character::Character(Role role, int x, int y) : wants(Item::Type::FRESH), gift(Item::Type::TORCH), role_(role), facing_(Facing::DOWN), state_(QuestState::NEW), moving_(false), x_(x), y_(y), wait_(0) {
   sprites_.reset(new SpriteMap("character.png", 4, 8, 8));
 }
 
@@ -33,6 +33,10 @@ bool Character::moving()  const {
   return moving_;
 }
 
+Character::QuestState Character::state() const {
+  return state_;
+}
+
 Character::Facing Character::facing() const {
   return facing_;
 }
@@ -48,6 +52,22 @@ void Character::stop() {
 
 void Character::add_wait(int wait) {
   wait_ += wait;
+}
+
+void Character::next_quest_state() {
+  switch (state_) {
+    case QuestState::NEW:
+      state_ = QuestState::WAITING;
+      break;
+
+    case QuestState::WAITING:
+      state_ = QuestState::COMPLETE;
+      break;
+
+    case QuestState::COMPLETE:
+      // nothing to do here
+      break;
+  }
 }
 
 std::pair<int, int> Character::position() const {

@@ -18,6 +18,7 @@ class Island : public Map {
   private:
 
     const float NOISE_ZOOM = 0.03f;
+    const int PLACEMENT_DIST = 100;
 
     float elevation_z_, moisture_z_;
     std::map<std::pair<int, int>, Cave> caves_;

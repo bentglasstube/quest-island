@@ -2,21 +2,18 @@
 
 #include "map_screen.h"
 
-void TitleScreen::init() {
-  text_.reset(new Text("text.png"));
-  backdrop_.reset(new Backdrop("title.png"));
-}
+TitleScreen::TitleScreen() : text_("text.png"), backdrop_("title.png") {}
 
 bool TitleScreen::update(const Input& input, Audio&, unsigned int) {
   return !input.any_pressed();
 }
 
 void TitleScreen::draw(Graphics& graphics) const {
-  backdrop_->draw(graphics);
-  text_->draw(graphics, "Press any key", 128, 208, Text::Alignment::CENTER);
+  backdrop_.draw(graphics);
+  text_.draw(graphics, "Press any key", 128, 208, Text::Alignment::Center);
 }
 
-Screen* TitleScreen::next_screen() {
+Screen* TitleScreen::next_screen() const {
   return new MapScreen();
 }
 
