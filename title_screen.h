@@ -16,7 +16,7 @@ class TitleScreen : public Screen {
     bool update(const Input& input, Audio& audio, unsigned int elapsed) override;
     void draw(Graphics& graphics) const override;
 
-    Screen* next_screen() override;
+    Screen* next_screen() const override;
     std::string get_music_track() const override;
 
   private:

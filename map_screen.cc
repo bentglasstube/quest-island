@@ -16,9 +16,9 @@ void MapScreen::init() {
 
 bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
 
-  if (input.key_pressed(SDL_SCANCODE_R)) init();
+  if (input.key_pressed(Input::Button::Select)) init();
 
-  if (input.key_pressed(SDL_SCANCODE_RETURN)) {
+  if (input.key_pressed(Input::Button::Start)) {
     if (paused_) {
       paused_.reset();
     } else {
@@ -39,19 +39,19 @@ bool MapScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
 
     map_->update(elapsed);
 
-    if (input.key_held(SDL_SCANCODE_W)) {
+    if (input.key_held(Input::Button::Up)) {
       map_->move_player(Character::Facing::UP);
-    } else if (input.key_held(SDL_SCANCODE_A)) {
+    } else if (input.key_held(Input::Button::Left)) {
       map_->move_player(Character::Facing::LEFT);
-    } else if (input.key_held(SDL_SCANCODE_S)) {
+    } else if (input.key_held(Input::Button::Down)) {
       map_->move_player(Character::Facing::DOWN);
-    } else if (input.key_held(SDL_SCANCODE_D)) {
+    } else if (input.key_held(Input::Button::Right)) {
       map_->move_player(Character::Facing::RIGHT);
     } else {
       map_->player->stop();
     }
 
-    if (input.key_pressed(SDL_SCANCODE_SPACE)) {
+    if (input.key_pressed(Input::Button::A)) {
       auto p = map_->player->position();
       switch (map_->player->facing()) {
         case Character::Facing::UP:    p.second--; break;
@@ -208,7 +208,7 @@ void MapScreen::draw(Graphics& graphics) const {
   }
 }
 
-Screen* MapScreen::next_screen() {
+Screen* MapScreen::next_screen() const {
   return NULL;
 }
 

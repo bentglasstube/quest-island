@@ -5,7 +5,7 @@
     <key>CFBundleExecutable</key>
     <string>launcher</string>
     <key>CFBundleIdentifier</key>
-    <string>org.eatabrick.questisland</string>
+    <string>org.eatabrick.quest-island</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>

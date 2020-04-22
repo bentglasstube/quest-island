@@ -13,10 +13,10 @@ bool TitleScreen::update(const Input& input, Audio&, unsigned int) {
 
 void TitleScreen::draw(Graphics& graphics) const {
   backdrop_->draw(graphics);
-  text_->draw(graphics, "Press any key", 128, 208, Text::Alignment::CENTER);
+  text_->draw(graphics, "Press any key", 128, 208, Text::Alignment::Center);
 }
 
-Screen* TitleScreen::next_screen() {
+Screen* TitleScreen::next_screen() const {
   return new MapScreen();
 }
 

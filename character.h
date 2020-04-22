@@ -15,7 +15,7 @@ class Character {
 
     Character(Role role, int x, int y);
 
-    virtual void update(unsigned int elapsed);
+    void update(unsigned int elapsed);
     void draw(Graphics& graphics, int x, int y) const;
 
     bool waiting() const;

@@ -1,4 +1,12 @@
 bazel-*
-build/
-quest-island*.tgz
-*.app
+/*.zip
+/*.tgz
+/*.app
+/*.AppImage
+/*.AppDir
+/*.data
+/*.html
+/*.js
+/*.wasm
+/*-web-*/
+*output/

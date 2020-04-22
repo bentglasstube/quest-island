@@ -7,8 +7,8 @@ PauseMenu::PauseMenu(std::set<Item::Type> inventory) : inventory_(inventory), se
 
 void PauseMenu::update(const Input& input, Audio&) {
   if (inventory_.size() > 1) {
-    if (input.key_pressed(SDL_SCANCODE_A)) --selected_;
-    if (input.key_pressed(SDL_SCANCODE_D)) ++selected_;
+    if (input.key_pressed(Input::Button::Left)) --selected_;
+    if (input.key_pressed(Input::Button::Right)) ++selected_;
 
     selected_ %= inventory_.size();
   }
@@ -38,7 +38,7 @@ void PauseMenu::draw(Graphics& graphics, int x, int y) const {
   }
   sprites_->draw(graphics, 8, x + w - 8, y + h - 8);
 
-  text_->draw(graphics, "- Inventory -", x + w / 2, y + 8, Text::Alignment::CENTER);
+  text_->draw(graphics, "- Inventory -", x + w / 2, y + 8, Text::Alignment::Center);
 
   int n = 0;
   for (auto i = inventory_.begin(); i != inventory_.end(); ++i) {
@@ -64,7 +64,7 @@ void PauseMenu::draw(Graphics& graphics, int x, int y) const {
     std::advance(i, selected_);
     Item item(*i);
 
-    text_->draw(graphics, item.name(), x + w / 2, y + 80, Text::Alignment::CENTER);
+    text_->draw(graphics, item.name(), x + w / 2, y + 80, Text::Alignment::Center);
     text_->draw(graphics, item.description(), x + 8, y + 96);
   }
 }
