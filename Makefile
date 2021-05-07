@@ -5,6 +5,7 @@ endif
 
 SOURCES=$(wildcard *.cc) $(wildcard gam/*.cc)
 CONTENT=$(wildcard content/*.png) $(wildcard content/*.ogg) $(wildcard content/*.wav)
+ICONS=icon.png
 BUILDDIR=$(CROSS)output
 OBJECTS=$(patsubst %.cc,$(BUILDDIR)/%.o,$(SOURCES))
 NAME=quest-island
@@ -15,7 +16,8 @@ LD=$(CROSS)ld
 AR=$(CROSS)ar
 PKG_CONFIG=$(CROSS)pkg-config
 CFLAGS=-O3 --std=c++14 -Wall -Wextra -pedantic -I gam -DNDEBUG
-EMFLAGS=-s USE_SDL=2 -s USE_SDL_MIXER=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_OGG=1 -s USE_VORBIS=1
+EMFLAGS=-s USE_SDL=2 -s USE_SDL_MIXER=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_OGG=1 -s USE_VORBIS=1 -s ALLOW_MEMORY_GROWTH=1 -fno-rtti -fno-exceptions
+EXTRA=
 
 EXECUTABLE=$(BUILDDIR)/$(NAME)
 
@@ -24,6 +26,7 @@ ifeq ($(UNAME), Windows)
 	LDFLAGS=-static-libstdc++ -static-libgcc
 	LDLIBS=`$(PKG_CONFIG) sdl2 SDL2_mixer SDL2_image --cflags --libs` -Wl,-Bstatic
 	EXECUTABLE=$(BUILDDIR)/$(NAME).exe
+	EXTRA=$(BUILDDIR)/icon.res.o
 endif
 ifeq ($(UNAME), Linux)
 	PACKAGE=$(NAME)-linux-$(VERSION).AppImage
@@ -56,6 +59,15 @@ $(BUILDDIR)/%.o: %.cc
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 package: $(PACKAGE)
+
+$(BUILDDIR)/icon.res.o: $(BUILDDIR)/icon.rc
+	$(CROSS)windres $< -O coff $@
+
+$(BUILDDIR)/icon.rc: $(BUILDDIR)/icon.ico
+	echo "420 ICON $<" > $@
+
+$(BUILDDIR)/icon.ico: $(ICONS)
+	convert $< $@
 
 wasm: $(NAME)-$(VERSION).html
 
