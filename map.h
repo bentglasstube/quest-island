@@ -17,7 +17,6 @@
 class Map {
   public:
     Map();
-    virtual ~Map() {}
 
     const int NPC_SLOW_FACTOR = 10;
 

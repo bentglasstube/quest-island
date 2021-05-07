@@ -1,13 +1,20 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@mxebzl//tools/windows:rules.bzl", "pkg_winzip")
-
-config_setting(
-    name = "windows",
-    values = {
-        "crosstool_top": "@mxebzl//tools/windows:toolchain",
-    }
+cc_binary(
+    name = "quest-island",
+    data = ["//content"],
+    linkopts = [
+        "-lSDL2",
+        "-lSDL2_image",
+        "-lSDL2_mixer",
+        "-static-libstdc++",
+        "-static-libgcc",
+    ],
+    srcs = ["main.cc"],
+    deps = [
+        ":title_screen",
+        "@libgam//:game",
+    ],
 )
 
 cc_library(
@@ -66,23 +73,6 @@ cc_library(
     ],
 )
 
-cc_binary(
-    name = "quest-island",
-    data = ["//content"],
-    linkopts = [
-        "-lSDL2",
-        "-lSDL2_image",
-        "-lSDL2_mixer",
-        "-static-libstdc++",
-        "-static-libgcc",
-    ],
-    srcs = ["main.cc"],
-    deps = [
-        ":title_screen",
-        "@libgam//:game",
-    ],
-)
-
 cc_library(
     name = "map",
     srcs = ["map.cc"],
@@ -134,24 +124,5 @@ cc_library(
         "@libgam//:backdrop",
         "@libgam//:screen",
         "@libgam//:text",
-    ],
-)
-
-pkg_winzip(
-    name = "quest-island-windows",
-    files = [
-        ":quest-island",
-        "//content",
-    ],
-)
-
-pkg_tar(
-    name = "quest-island-linux",
-    extension = "tar.gz",
-    strip_prefix = "/",
-    package_dir = "quest-island/",
-    srcs = [
-        ":quest-island",
-        "//content",
     ],
 )

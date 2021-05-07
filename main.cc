@@ -16,7 +16,7 @@ int main(int, char**) {
   config.graphics.title = "Quest Island";
   config.graphics.width = 256;
   config.graphics.height = 240;
-  config.graphics.scale = 3;
+  config.graphics.intscale = 3;
   config.graphics.fullscreen = false;
 
   Game game(config);

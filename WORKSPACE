@@ -1,5 +1,7 @@
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
 git_repository(
     name = "libgam",
-    remote = "https://github.com/bentglasstube/gam.git",
-    commit = "6cb3f3ce9f4fa3e7ecbed118c7a9ba9eaf04e86c",
+    remote = "https://git.sr.ht/~bentglasstube/gam",
+    commit = "fad449e47eac614b8528bb157642e5d0a35caa16",
 )
