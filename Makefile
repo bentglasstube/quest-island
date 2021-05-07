@@ -4,7 +4,7 @@ ifeq ($(UNAME), Windows)
 endif
 
 SOURCES=$(wildcard *.cc) $(wildcard gam/*.cc)
-CONTENT=$(wildcard content/*.png) $(wildcard content/*.ogg) $(wildcard content/*.wav)
+CONTENT=$(wildcard content/*)
 ICONS=icon.png
 BUILDDIR=$(CROSS)output
 OBJECTS=$(patsubst %.cc,$(BUILDDIR)/%.o,$(SOURCES))
@@ -51,8 +51,8 @@ echo:
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LDLIBS)
+$(EXECUTABLE): $(OBJECTS) $(EXTRA)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(EXTRA) $(LDLIBS)
 
 $(BUILDDIR)/%.o: %.cc
 	@mkdir -p $(BUILDDIR)/gam
@@ -129,6 +129,5 @@ distclean: clean
 	rm -rf *.AppDir *.AppImage
 	rm -rf *.html *.js *.data *.wasm
 	rm -rf *-web-*/ *output/
-
 
 .PHONY: all echo clean distclean run package wasm web
